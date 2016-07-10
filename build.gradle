@@ -1,0 +1,100 @@
+subprojects {
+    apply plugin: 'java'
+    group = 'com.cmartin.learn'
+    version = '1.0.0-SNAPSHOT'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+        testCompile 'com.jayway.jsonpath:json-path:2.2.0'
+        testCompile 'org.mockito:mockito-core:2.0.81-beta'
+        testCompile 'junit:junit:4.12'
+    }
+
+
+    jar {
+        manifest {
+            attributes 'Implementation-Title': 'Gradle Java 8 POC Project',
+                    'Implementation-Version': version
+        }
+    }
+
+
+}
+
+// S U B P R O J E C T S
+
+project(':api') {
+    dependencies {
+
+    }
+}
+
+project(':service') {
+    dependencies {
+        compile project(':api')
+
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+        compile group: 'org.springframework', name: 'spring-context', version: '4.3.0.RELEASE'
+    }
+}
+
+project(':webapp') {
+    apply plugin: 'war'
+
+    dependencies {
+        compile project(':api')
+        compile project(':service')
+        compile project(':repository')
+        compile project(':domain')
+
+        compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+        compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.0.RELEASE'
+    }
+}
+
+/*
+task upper << {
+    String someString = 'mY_nAmE'
+    println "Original: " + someString 
+    println "Upper case: " + someString.toUpperCase()
+}
+
+task count << {
+    4.times { print "$it " }
+}
+
+task intro(dependsOn: hello) << {
+    println "I'm Gradle"
+}
+
+task taskX(dependsOn: 'taskY') << {
+    println 'taskX'
+}
+task taskY << {
+    println 'taskY'
+}
+
+4.times { counter ->
+    task "task$counter" << {
+        println "I'm task number $counter"
+    }
+}
+
+task printfiles << {
+    fileList('/Users/cmartin/Dropbox/books').each {File file ->
+        println "file: $file.name"
+    }
+}
+
+File[] fileList(String dir) {
+    file(dir).listFiles({file -> file.isFile() } as FileFilter).sort()
+}
+*/
