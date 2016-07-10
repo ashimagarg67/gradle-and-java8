@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
 public class BankApiImpl implements BankApi {
     @Override
     public OperationOutputDto operation(final OperationInputDto operationInputDto) {
-        return new OperationOutputDto();
+        return new OperationOutputDto("dummyProperty");
     }
 }

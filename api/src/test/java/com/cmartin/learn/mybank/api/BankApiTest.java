@@ -26,11 +26,12 @@ public class BankApiTest {
 
     @Test
     public void testOperation() {
-        OperationInputDto operationInputDto = new OperationInputDto();
-        OperationOutputDto operationOutputDto = new OperationOutputDto();
+        String dummyProperty = "dummyProperty";
+        OperationInputDto operationInputDto = new OperationInputDto(dummyProperty);
+        OperationOutputDto operationOutputDto = new OperationOutputDto(dummyProperty);
 
         when(this.api.operation(operationInputDto))
-                .thenReturn(new OperationOutputDto());
+                .thenReturn(new OperationOutputDto(dummyProperty));
 
         final OperationOutputDto operation = this.api.operation(operationInputDto);
 
