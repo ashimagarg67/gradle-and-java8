@@ -36,9 +36,19 @@ project(':api') {
     }
 }
 
+project(':repository') {
+    dependencies {
+        compile project(':domain')
+
+        compile group: 'org.springframework.data', name: 'spring-data-neo4j', version: '4.1.2.RELEASE'
+    }
+}
+
 project(':service') {
     dependencies {
         compile project(':api')
+        compile project(':repository')
+        compile project(':shared')
 
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
@@ -50,10 +60,12 @@ project(':webapp') {
     apply plugin: 'war'
 
     dependencies {
+        compile project(':domain')
+        compile project(':shared')
         compile project(':api')
         compile project(':service')
         compile project(':repository')
-        compile project(':domain')
+        testCompile project(':test-utils')
 
         compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
         compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.0.RELEASE'
