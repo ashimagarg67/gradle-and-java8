@@ -74,5 +74,6 @@ project(':webapp') {
 
     jettyRun {
         httpPort 8081
+        contextPath 'mybank'
     }
 }
