@@ -58,6 +58,7 @@ project(':service') {
 
 project(':webapp') {
     apply plugin: 'war'
+    apply plugin: 'jetty'
 
     dependencies {
         compile project(':domain')
@@ -69,5 +70,9 @@ project(':webapp') {
 
         compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
         compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.0.RELEASE'
+    }
+
+    jettyRun {
+        httpPort 8081
     }
 }
