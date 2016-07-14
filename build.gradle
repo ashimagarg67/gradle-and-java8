@@ -1,5 +1,8 @@
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'project-report'
+    //apply plugin: "jacoco"
+
     group = 'com.cmartin.learn'
     version = '1.0.0-SNAPSHOT'
 
@@ -10,9 +13,21 @@ subprojects {
         mavenCentral()
     }
 
+    configurations.all {
+        //compile.exclude group: 'org.springframework', name: 'spring-context', version: '4.2.6.RELEASE'
+        resolutionStrategy {
+            // fail eagerly on version conflict (includes transitive dependencies)
+            // e.g. multiple different versions of the same dependency (group and name are equal)
+            failOnVersionConflict()
+        }
+    }
+
     dependencies {
         testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
-        testCompile 'com.jayway.jsonpath:json-path:2.2.0'
+        testCompile('com.jayway.jsonpath:json-path:2.2.0') {
+            exclude module: 'slf4j-api'
+        }
+
         testCompile 'org.mockito:mockito-core:2.0.81-beta'
         testCompile 'junit:junit:4.12'
     }
@@ -40,7 +55,13 @@ project(':repository') {
     dependencies {
         compile project(':domain')
 
-        compile group: 'org.springframework.data', name: 'spring-data-neo4j', version: '4.1.2.RELEASE'
+        compile(group: 'org.springframework.data', name: 'spring-data-neo4j', version: '4.1.2.RELEASE') {
+            exclude module: 'commons-codec'
+            exclude module: 'spring-beans'
+            exclude module: 'spring-context'
+            exclude module: 'spring-core'
+            exclude module: 'slf4j-api'
+        }
     }
 }
 
