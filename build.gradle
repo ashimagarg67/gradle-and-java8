@@ -2,6 +2,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'project-report'
 //    apply plugin: "jacoco"
+    apply plugin: 'announce'
 
     group = 'com.cmartin.learn'
     version = '1.0.0-SNAPSHOT'
@@ -99,9 +100,12 @@ project(':webapp') {
         compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.0.RELEASE'
     }
 
-    task increaseBuildVersion(type: BuildNumberGeneratorTask)
+    task increaseBuildVersion(type: BuildNumberGeneratorTask) {
+        description 'Increases build number'
+    }
 
     war.dependsOn increaseBuildVersion
+
 
     jettyRun {
         httpPort 8081
@@ -114,7 +118,7 @@ class BuildNumberGeneratorTask extends DefaultTask {
     def increaseBuildVersion() {
         File file = new File("build.number")
         Integer number = file.text.toInteger() + 1
-        println "new build version: $number"
+        //println "new build version: $number"
         file.write(number.toString())
     }
 }
