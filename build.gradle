@@ -1,7 +1,7 @@
 subprojects {
     apply plugin: 'java'
     apply plugin: 'project-report'
-    //apply plugin: "jacoco"
+//    apply plugin: "jacoco"
 
     group = 'com.cmartin.learn'
     version = '1.0.0-SNAPSHOT'
@@ -32,7 +32,6 @@ subprojects {
         testCompile 'junit:junit:4.12'
     }
 
-
     jar {
         manifest {
             attributes 'Implementation-Title': 'Gradle Java 8 POC Project',
@@ -41,6 +40,12 @@ subprojects {
     }
 
 
+    sourceSets {
+        main {
+
+            allJava.each { println(it) }
+        }
+    }
 }
 
 // S U B P R O J E C T S
@@ -82,9 +87,10 @@ project(':webapp') {
     apply plugin: 'jetty'
 
     dependencies {
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+        compile project(':api')
         compile project(':domain')
         compile project(':shared')
-        compile project(':api')
         compile project(':service')
         compile project(':repository')
         testCompile project(':test-utils')
@@ -93,8 +99,24 @@ project(':webapp') {
         compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.0.RELEASE'
     }
 
+    task increaseBuildVersion(type: BuildNumberGeneratorTask)
+
+    war.dependsOn increaseBuildVersion
+
     jettyRun {
         httpPort 8081
         contextPath 'mybank'
     }
 }
+
+class BuildNumberGeneratorTask extends DefaultTask {
+    @TaskAction
+    def increaseBuildVersion() {
+        File file = new File("build.number")
+        Integer number = file.text.toInteger() + 1
+        println "new build version: $number"
+        file.write(number.toString())
+    }
+}
+
+
