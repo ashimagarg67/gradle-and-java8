@@ -144,6 +144,12 @@ project(':webapp') {
     }
 }
 
+project(':test-utils') {
+    dependencies {
+        compile project(':api')
+    }
+}
+
 class BuildNumberGeneratorTask extends DefaultTask {
     @TaskAction
     def increaseBuildVersion() {

@@ -28,7 +28,6 @@ public class WebTest {
     protected BankService bankApi;
     protected FilterManager filterManger = new FilterManager();
 
-    //    @Autowired
     protected BankController bankController;
 
     private MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
