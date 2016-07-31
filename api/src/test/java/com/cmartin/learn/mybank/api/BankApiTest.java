@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 public class BankApiTest {
 
     @Mock
-    protected BankApi api;
+    protected BankService api;
 
     @Before
     public void setup() {

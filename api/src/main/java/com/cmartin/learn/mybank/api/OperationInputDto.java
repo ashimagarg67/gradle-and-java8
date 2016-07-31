@@ -1,5 +1,8 @@
 package com.cmartin.learn.mybank.api;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 
 /**
@@ -18,5 +21,12 @@ public class OperationInputDto implements Serializable {
 
     public void setDummyProperty(String dummyProperty) {
         this.dummyProperty = dummyProperty;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("dummyProperty", dummyProperty)
+                .toString();
     }
 }

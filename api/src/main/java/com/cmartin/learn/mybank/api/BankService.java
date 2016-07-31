@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * Created by cmartin on 09/07/16.
  */
-public interface BankApi {
+public interface BankService {
     /**
      * @param operationInputDto
      *

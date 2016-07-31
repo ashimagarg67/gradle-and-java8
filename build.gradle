@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'project-report'
@@ -12,24 +22,38 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven { url "http://repo.spring.io/libs-release" }
     }
+
 
     configurations.all {
         //compile.exclude group: 'org.springframework', name: 'spring-context', version: '4.2.6.RELEASE'
         resolutionStrategy {
             // fail eagerly on version conflict (includes transitive dependencies)
             // e.g. multiple different versions of the same dependency (group and name are equal)
-            failOnVersionConflict()
+            //failOnVersionConflict()
         }
     }
 
+    ext.libraries = [ // Groovy map literal
+                      commons_lang3   : 'org.apache.commons:commons-lang3:3.4',
+                      jackson_core    : 'com.fasterxml.jackson.core:jackson-core:2.8.1',
+                      jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
+    ]
+
     dependencies {
+        compile(group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7') {
+            exclude module: 'slf4j-api'
+        }
+
+        //compile: group:'org.apache.commons', name:'commons-lang3', version: 'COMMONS_LANG3_VERSION'
+
         testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
         testCompile('com.jayway.jsonpath:json-path:2.2.0') {
             exclude module: 'slf4j-api'
         }
 
-        testCompile 'org.mockito:mockito-core:2.0.81-beta'
+        testCompile 'org.mockito:mockito-core:2.0.82-beta'
         testCompile 'junit:junit:4.12'
     }
 
@@ -53,7 +77,9 @@ subprojects {
 
 project(':api') {
     dependencies {
-
+        compile project(':shared')
+        compile libraries.commons_lang3
+        compile libraries.jackson_databind
     }
 }
 
@@ -77,15 +103,16 @@ project(':service') {
         compile project(':repository')
         compile project(':shared')
 
-        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+        compile libraries.commons_lang3
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
-        compile group: 'org.springframework', name: 'spring-context', version: '4.3.0.RELEASE'
+        compile group: 'org.springframework', name: 'spring-context', version: '4.3.1.RELEASE'
     }
 }
 
 project(':webapp') {
     apply plugin: 'war'
-    apply plugin: 'jetty'
+    //apply plugin: 'jetty'
+    apply plugin: 'org.akhikhl.gretty'
 
     dependencies {
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
@@ -93,11 +120,12 @@ project(':webapp') {
         compile project(':domain')
         compile project(':shared')
         compile project(':service')
-        compile project(':repository')
+//        compile project(':repository')
         testCompile project(':test-utils')
 
         compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-        compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.0.RELEASE'
+        compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.1.RELEASE'
+        testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.1.RELEASE'
     }
 
     task increaseBuildVersion(type: BuildNumberGeneratorTask) {
@@ -106,10 +134,13 @@ project(':webapp') {
 
     war.dependsOn increaseBuildVersion
 
-
-    jettyRun {
-        httpPort 8081
-        contextPath 'mybank'
+    // Don't use Jetty8, even it's a servlet 3.0+ container,
+    // but not support non-jar WebApplicationInitializer scanning.
+    // It will cause "No Spring WebApplicationInitializer types detected on classpath"
+    gretty {
+        port = 8081
+        contextPath = 'mybank'
+        servletContainer = 'jetty9' //tomcat7 or tomcat8
     }
 }
 
@@ -122,5 +153,3 @@ class BuildNumberGeneratorTask extends DefaultTask {
         file.write(number.toString())
     }
 }
-
-

@@ -3,16 +3,16 @@ package com.cmartin.learn.mybank.service;
 import com.cmartin.learn.mybank.BankRepository;
 import com.cmartin.learn.mybank.api.AccountDto;
 import com.cmartin.learn.mybank.api.AccountFilter;
-import com.cmartin.learn.mybank.api.BankApi;
+import com.cmartin.learn.mybank.api.BankService;
 import com.cmartin.learn.mybank.api.ContractDto;
 import com.cmartin.learn.mybank.api.ContractFilter;
 import com.cmartin.learn.mybank.api.OperationInputDto;
 import com.cmartin.learn.mybank.api.OperationOutputDto;
 import com.cmartin.learn.mybank.api.UserDto;
 import com.cmartin.learn.mybank.api.UserFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,9 +21,9 @@ import java.util.UUID;
  * Created by cmartin on 10/07/16.
  */
 @Service
-public class BankApiImpl implements BankApi {
+public class BankServiceImpl implements BankService {
 
-    @Autowired
+    // TODO @Autowired
     private BankRepository bankRepository;
 
     @Override
@@ -43,7 +43,7 @@ public class BankApiImpl implements BankApi {
 
     @Override
     public List<AccountDto> getAccounts(final AccountFilter filter) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class BankApiImpl implements BankApi {
 
     @Override
     public List<UserDto> getUsers(final UserFilter filter) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
