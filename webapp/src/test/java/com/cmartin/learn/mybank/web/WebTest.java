@@ -1,6 +1,7 @@
 package com.cmartin.learn.mybank.web;
 
 import com.cmartin.learn.mybank.api.BankService;
+import com.cmartin.learn.mybank.api.UserFilter;
 import com.cmartin.learn.mybank.test.TestUtils;
 import com.cmartin.learn.mybank.web.controller.BankController;
 import com.cmartin.learn.mybank.web.controller.FilterManager;
@@ -12,9 +13,14 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 
@@ -23,6 +29,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
  */
 @RunWith(MockitoJUnitRunner.class)
 public class WebTest {
+    protected static final ResultMatcher statusOk = status().isOk();
 
     @Mock
     protected BankService bankApi;
@@ -45,9 +52,32 @@ public class WebTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void testGetAccounts() throws Exception {
         this.mockMvc.perform(get("/accounts"))
-                .andDo(print());
+                .andDo(print())
+                .andExpect(statusOk);
+    }
+
+
+    @Test
+    public void testGetUsers() throws Exception {
+        UserFilter userFilter = this.filterManger.buildUserFilter();
+
+        when(this.bankApi.getUsers(userFilter))
+                .thenReturn(TestUtils.createUsers(2));
+
+        this.mockMvc.perform(get("/users"))
+                .andDo(print())
+                .andExpect(statusOk);
+
+        verify(this.bankApi).getUsers(any(UserFilter.class));
+    }
+
+    @Test
+    public void testGetContracts() throws Exception {
+        this.mockMvc.perform(get("/contracts"))
+                .andDo(print())
+                .andExpect(statusOk);
     }
 
     /**

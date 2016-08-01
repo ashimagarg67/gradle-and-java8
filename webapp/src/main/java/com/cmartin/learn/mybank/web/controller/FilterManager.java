@@ -1,6 +1,7 @@
 package com.cmartin.learn.mybank.web.controller;
 
 import com.cmartin.learn.mybank.api.AccountFilter;
+import com.cmartin.learn.mybank.api.ContractFilter;
 import com.cmartin.learn.mybank.api.UserFilter;
 import org.springframework.stereotype.Component;
 
@@ -15,5 +16,9 @@ public class FilterManager {
 
     public AccountFilter buildAccoutFilter() {
         return new AccountFilter();
+    }
+
+    public ContractFilter buildContractFilter() {
+        return new ContractFilter();
     }
 }

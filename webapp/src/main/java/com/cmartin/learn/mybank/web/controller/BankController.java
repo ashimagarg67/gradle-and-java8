@@ -3,6 +3,8 @@ package com.cmartin.learn.mybank.web.controller;
 import com.cmartin.learn.mybank.api.AccountDto;
 import com.cmartin.learn.mybank.api.AccountFilter;
 import com.cmartin.learn.mybank.api.BankService;
+import com.cmartin.learn.mybank.api.ContractDto;
+import com.cmartin.learn.mybank.api.ContractFilter;
 import com.cmartin.learn.mybank.api.UserDto;
 import com.cmartin.learn.mybank.api.UserFilter;
 import org.slf4j.Logger;
@@ -50,6 +52,21 @@ public class BankController {
         this.logger.debug("output: retrieved {} useres", users.size());
 
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/contracts",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<ContractDto>> getContracts(
+            @RequestParam(required = false, defaultValue = "10") final Integer pageSize) {
+
+        this.logger.debug("input: pageSize={}", pageSize);
+
+        ContractFilter filter = this.filterManager.buildContractFilter();
+        final List<ContractDto> contracts = this.bankService.getContracts((filter));
+
+        this.logger.debug("output: retrieved {} contracts", contracts.toString());
+
+        return new ResponseEntity<>(contracts, HttpStatus.OK);
     }
 
 
