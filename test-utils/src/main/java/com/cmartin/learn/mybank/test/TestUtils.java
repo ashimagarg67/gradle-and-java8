@@ -3,6 +3,7 @@ package com.cmartin.learn.mybank.test;
 import com.cmartin.learn.mybank.api.UserDto;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,7 +15,7 @@ public class TestUtils {
     }
 
     public static UserDto newUserDto() {
-        UserDto userDto = new UserDto();
+        UserDto userDto = new UserDto(UUID.randomUUID());
 
         return userDto;
     }

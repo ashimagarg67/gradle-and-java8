@@ -53,7 +53,7 @@ subprojects {
             exclude module: 'slf4j-api'
         }
 
-        testCompile 'org.mockito:mockito-core:2.0.82-beta'
+        testCompile 'org.mockito:mockito-core:2.0.95-beta'
         testCompile 'junit:junit:4.12'
     }
 
@@ -89,6 +89,7 @@ project(':repository') {
 
         compile(group: 'org.springframework.data', name: 'spring-data-neo4j', version: '4.1.2.RELEASE') {
             exclude module: 'commons-codec'
+            exclude module: 'jackson-databind'
             exclude module: 'spring-beans'
             exclude module: 'spring-context'
             exclude module: 'spring-core'
