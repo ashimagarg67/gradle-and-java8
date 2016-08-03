@@ -1,7 +1,11 @@
 package com.cmartin.learn.mybank.test;
 
+import com.cmartin.learn.mybank.api.AccountDto;
+import com.cmartin.learn.mybank.api.ContractDto;
 import com.cmartin.learn.mybank.api.UserDto;
+import org.apache.commons.lang3.RandomStringUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -15,9 +19,9 @@ public class TestUtils {
     }
 
     public static UserDto newUserDto() {
-        UserDto userDto = new UserDto(UUID.randomUUID());
+        UserDto dto = new UserDto(UUID.randomUUID());
 
-        return userDto;
+        return dto;
     }
 
 
@@ -27,6 +31,53 @@ public class TestUtils {
                 .collect(Collectors.toList());
 
     }
+
+    public static List<ContractDto> createContracts(final Integer count) {
+        return IntStream.rangeClosed(1, count)
+                .mapToObj(i -> newContractDto(UUID.randomUUID(),
+                        "alias-" + i))
+                .collect(Collectors.toList());
+    }
+
+    private static ContractDto newContractDto(final UUID id, final String alias) {
+        ContractDto dto = new ContractDto(id, alias);
+
+        return dto;
+    }
+
+    private static ContractDto newContractDtoFull(final UUID id, final String alias) {
+        ContractDto dto = new ContractDto(id, alias);
+
+        return dto;
+    }
+
+    public static List<AccountDto> createAccounts(final Integer count) {
+        return IntStream.rangeClosed(1, count)
+                .mapToObj(i -> newAccountDto(UUID.randomUUID(),
+                        "alias-" + i,
+                        makePseudoIBANAccount(),
+                        makeBigDecimal(0d)))
+                .collect(Collectors.toList());
+    }
+
+    private static AccountDto newAccountDto(UUID id, String alias, String number, BigDecimal balance) {
+        AccountDto dto = new AccountDto(id, alias, number, balance);
+
+        return dto;
+    }
+
+
+    public static String makePseudoIBANAccount() {
+        // country (2) + number (22) ES9<-22->1
+        return RandomStringUtils.randomAlphabetic(2).toUpperCase() +
+                RandomStringUtils.randomNumeric(22);
+
+    }
+
+    public static BigDecimal makeBigDecimal(final Double value) {
+        return BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
 }
 
 
