@@ -15,6 +15,11 @@ import java.util.stream.IntStream;
  *
  */
 public class TestUtils {
+    public static final String DECIMAL_NUMBER_PATTERN = "^[0-9]+.[0-9]{2}";
+    public static final String IBAN_PATTERN = "^[A-Z]{2}[0-9]{22}";
+    public static final String WORD_PATTERN = "\\p{Print}+";
+
+
     public static void createEntities(Integer count) {
     }
 
@@ -60,7 +65,7 @@ public class TestUtils {
                 .collect(Collectors.toList());
     }
 
-    private static AccountDto newAccountDto(UUID id, String alias, String number, BigDecimal balance) {
+    public static AccountDto newAccountDto(UUID id, String alias, String number, BigDecimal balance) {
         AccountDto dto = new AccountDto(id, alias, number, balance);
 
         return dto;

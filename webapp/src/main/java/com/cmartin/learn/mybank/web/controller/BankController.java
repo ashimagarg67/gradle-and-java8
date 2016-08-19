@@ -14,11 +14,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by cmartin on 10/07/16.
@@ -67,6 +70,20 @@ public class BankController {
         this.logger.debug("output: retrieved {} contracts", contracts.toString());
 
         return new ResponseEntity<>(contracts, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/accounts/{accountId}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AccountDto> getAccount(@PathVariable String accountId) {
+
+        this.logger.debug("input: {}", accountId);
+
+        final Optional<AccountDto> account = this.bankService.getAccount(UUID.fromString(accountId));
+
+        this.logger.debug("output: {}", account.get().toString());
+
+        return new ResponseEntity<>(account.get(), HttpStatus.OK);
     }
 
 

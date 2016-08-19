@@ -1,5 +1,6 @@
 package com.cmartin.learn.mybank.web;
 
+import com.cmartin.learn.mybank.api.AccountDto;
 import com.cmartin.learn.mybank.api.AccountFilter;
 import com.cmartin.learn.mybank.api.BankService;
 import com.cmartin.learn.mybank.api.ContractFilter;
@@ -17,8 +18,18 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import static com.cmartin.learn.mybank.test.TestUtils.DECIMAL_NUMBER_PATTERN;
+import static com.cmartin.learn.mybank.test.TestUtils.IBAN_PATTERN;
+import static com.cmartin.learn.mybank.test.TestUtils.WORD_PATTERN;
+import static com.cmartin.learn.mybank.test.TestUtils.makeBigDecimal;
+import static com.cmartin.learn.mybank.test.TestUtils.makePseudoIBANAccount;
+import static com.cmartin.learn.mybank.test.TestUtils.newAccountDto;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.hamcrest.text.MatchesPattern.matchesPattern;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,6 +70,28 @@ public class WebTest {
         this.mockMvc = standaloneSetup(this.bankController)
                 .setMessageConverters(converter)
                 .build();
+    }
+
+    @Test
+    public void testGetAccount() throws Exception {
+        UUID accountId = UUID.randomUUID();
+
+        Optional<AccountDto> accountDto = Optional.of(newAccountDto(
+                accountId, "account-alias", makePseudoIBANAccount(), makeBigDecimal(100d)));
+        when(this.bankApi.getAccount(accountId))
+                .thenReturn(accountDto);
+
+        this.mockMvc.perform(get("/accounts/" + accountId))
+                .andDo(print())
+                .andExpect(statusOk)
+                .andExpect(contentTypeJson)
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.alias").value(matchesPattern(WORD_PATTERN)))
+                .andExpect(jsonPath("$.number").value(matchesPattern(IBAN_PATTERN)))
+                .andExpect(jsonPath("$.balance").value(matchesPattern(DECIMAL_NUMBER_PATTERN)));
+
+        verify(this.bankApi).getAccount(accountId);
     }
 
     @Test
