@@ -53,7 +53,7 @@ subprojects {
             exclude module: 'slf4j-api'
         }
 
-        testCompile 'org.mockito:mockito-core:2.0.95-beta'
+        testCompile 'org.mockito:mockito-core:2.0.106-beta'
         testCompile 'junit:junit:4.12'
     }
 
