@@ -7,6 +7,7 @@ import com.cmartin.learn.mybank.api.ContractDto;
 import com.cmartin.learn.mybank.api.ContractFilter;
 import com.cmartin.learn.mybank.api.UserDto;
 import com.cmartin.learn.mybank.api.UserFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.apache.commons.lang3.StringUtils.join;
 
 /**
  * Created by cmartin on 10/07/16.
@@ -39,6 +42,48 @@ public class BankController {
     @Autowired
     public BankController(BankService bankApi) {
         this.bankService = bankApi;
+    }
+
+    @GetMapping(value = "/accounts/{accountId}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AccountDto> getAccount(@PathVariable String accountId) {
+
+        this.logger.debug("input: {}", accountId);
+
+        final Optional<AccountDto> account = this.bankService.getAccount(UUID.fromString(accountId));
+
+        this.logger.debug("output: {}", account.get().toString());
+
+        return new ResponseEntity<>(account.get(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/accounts",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<AccountDto>> getAccounts(
+            @RequestParam(required = false, defaultValue = "10") final Integer pageSize) {
+
+        this.logger.debug("input: pageSize={}", pageSize);
+
+        AccountFilter filter = this.filterManager.buildAccoutFilter();
+        final List<AccountDto> accounts = this.bankService.getAccounts((filter));
+
+        this.logger.debug("output: retrieved {} accounts", accounts.toString());
+
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/users/{userId}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
+
+        this.logger.debug("input: {}", userId);
+
+        final Optional<UserDto> user = this.bankService.getUser(UUID.fromString(userId));
+
+        this.logger.debug("output: {}", user.get().toString());
+
+        return new ResponseEntity<>(user.get(), HttpStatus.OK);
     }
 
 
@@ -73,38 +118,11 @@ public class BankController {
     }
 
 
-    @GetMapping(value = "/accounts/{accountId}",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AccountDto> getAccount(@PathVariable String accountId) {
-
-        this.logger.debug("input: {}", accountId);
-
-        final Optional<AccountDto> account = this.bankService.getAccount(UUID.fromString(accountId));
-
-        this.logger.debug("output: {}", account.get().toString());
-
-        return new ResponseEntity<>(account.get(), HttpStatus.OK);
-    }
-
-
-    @GetMapping(value = "/accounts",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<AccountDto>> getAccounts(
-            @RequestParam(required = false, defaultValue = "10") final Integer pageSize) {
-
-        this.logger.debug("input: pageSize={}", pageSize);
-
-        AccountFilter filter = this.filterManager.buildAccoutFilter();
-        final List<AccountDto> accounts = this.bankService.getAccounts((filter));
-
-        this.logger.debug("output: retrieved {} accounts", accounts.toString());
-
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
-    }
-
     @GetMapping(value = "/")
     public ResponseEntity<String> getRootContext() {
-        return new ResponseEntity<>("Hello, this is 'gralde-and-java8' root context: " + LocalDateTime.now(),
+        return new ResponseEntity<>(
+                join("Hello, this is 'gralde-and-java8' root context: ",
+                        LocalDateTime.now().toString()),
                 HttpStatus.OK);
     }
 

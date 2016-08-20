@@ -18,17 +18,21 @@ public class TestUtils {
     public static final String DECIMAL_NUMBER_PATTERN = "^[0-9]+.[0-9]{2}";
     public static final String IBAN_PATTERN = "^[A-Z]{2}[0-9]{22}";
     public static final String WORD_PATTERN = "\\p{Print}+";
+    public static final String UUID_PATTERN = "^[a-z0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}";
 
 
     public static void createEntities(Integer count) {
     }
 
     public static UserDto newUserDto() {
-        UserDto dto = new UserDto(UUID.randomUUID());
+        return newUserDto(UUID.randomUUID());
+    }
+
+    public static UserDto newUserDto(final UUID userID) {
+        UserDto dto = new UserDto(userID);
 
         return dto;
     }
-
 
     public static List<UserDto> createUsers(final Integer count) {
         return IntStream.rangeClosed(1, count)
