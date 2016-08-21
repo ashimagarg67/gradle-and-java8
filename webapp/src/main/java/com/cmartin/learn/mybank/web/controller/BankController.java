@@ -71,6 +71,21 @@ public class BankController {
         return new ResponseEntity<>(accountTransactions, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/accounts/{accountId}/transactions/{transactionId}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AccountTransactionDto> getAccountTransaction(
+            @PathVariable String accountId, @PathVariable String transactionId) {
+
+        this.logger.debug("input: accountId={}, transactionId={}", accountId, transactionId);
+
+        final Optional<AccountTransactionDto> accountTransaction =
+                this.bankService.getAccountTransaction(UUID.fromString(transactionId));
+
+        this.logger.debug("output: accountTransaction {}", accountTransaction.get().toString());
+
+        return new ResponseEntity<>(accountTransaction.get(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/accounts",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AccountDto>> getAccounts(
