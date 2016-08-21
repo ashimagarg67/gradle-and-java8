@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.cmartin.learn.mybank.test.TestUtils.COLLECTION_SIZE_1;
+import static com.cmartin.learn.mybank.test.TestUtils.COLLECTION_SIZE_5;
 import static com.cmartin.learn.mybank.test.TestUtils.DECIMAL_NUMBER_PATTERN;
 import static com.cmartin.learn.mybank.test.TestUtils.IBAN_PATTERN;
 import static com.cmartin.learn.mybank.test.TestUtils.UUID_PATTERN;
@@ -53,7 +55,6 @@ public class WebTest {
     protected static final ResultMatcher statusOk = status().isOk();
     protected static final ResultMatcher contentTypeJson = content()
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-    public static final int COLLECTION_SIZE_5 = 5;
 
     @Mock
     protected BankService bankApi;
@@ -148,6 +149,27 @@ public class WebTest {
 
         verify(this.bankApi).getUsers(any(UserFilter.class));
     }
+
+    @Test
+    public void testGetAccountUsers() throws Exception {
+        UUID accountId = UUID.randomUUID();
+
+        when(this.bankApi.getAccountUsers(accountId))
+                .thenReturn(TestUtils.createUsers(COLLECTION_SIZE_1));
+
+        this.mockMvc.perform(get("/accounts/{accountId}/users", accountId))
+                .andDo(print())
+                .andExpect(statusOk)
+                .andExpect(contentTypeJson)
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$", hasSize(lessThanOrEqualTo(COLLECTION_SIZE_1))))
+                .andExpect(jsonPath("$.[0].id").exists())
+                .andExpect(jsonPath("$.[0].id").value(matchesPattern(UUID_PATTERN)));
+
+        verify(this.bankApi).getAccountUsers(accountId);
+    }
+
 
     @Test
     public void testGetContracts() throws Exception {

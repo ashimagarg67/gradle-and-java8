@@ -15,6 +15,9 @@ import java.util.stream.IntStream;
  *
  */
 public class TestUtils {
+    public static final int COLLECTION_SIZE_1 = 1;
+    public static final int COLLECTION_SIZE_5 = 5;
+
     public static final String DECIMAL_NUMBER_PATTERN = "^[0-9]+.[0-9]{2}";
     public static final String IBAN_PATTERN = "^[A-Z]{2}[0-9]{22}";
     public static final String WORD_PATTERN = "\\p{Print}+";

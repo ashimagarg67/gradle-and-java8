@@ -72,11 +72,11 @@ public interface BankService {
     /**
      * Retrieves the account owner or participants.
      *
-     * @param account
+     * @param accountId
      *
      * @return
      */
-    List<UserDto> getAccountUsers(AccountDto account);
+    List<UserDto> getAccountUsers(UUID accountId);
 
 
 }

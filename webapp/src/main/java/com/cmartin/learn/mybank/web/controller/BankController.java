@@ -7,7 +7,6 @@ import com.cmartin.learn.mybank.api.ContractDto;
 import com.cmartin.learn.mybank.api.ContractFilter;
 import com.cmartin.learn.mybank.api.UserDto;
 import com.cmartin.learn.mybank.api.UserFilter;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class BankController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AccountDto> getAccount(@PathVariable String accountId) {
 
-        this.logger.debug("input: {}", accountId);
+        this.logger.debug("input: accountId={}", accountId);
 
         final Optional<AccountDto> account = this.bankService.getAccount(UUID.fromString(accountId));
 
@@ -77,7 +76,7 @@ public class BankController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
 
-        this.logger.debug("input: {}", userId);
+        this.logger.debug("input: userId={}", userId);
 
         final Optional<UserDto> user = this.bankService.getUser(UUID.fromString(userId));
 
@@ -101,6 +100,20 @@ public class BankController {
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/accounts/{accountId}/users",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<UserDto>> getAccountUsers(@PathVariable String accountId) {
+
+        this.logger.debug("input: accountId={}", accountId);
+
+        final List<UserDto> users = this.bankService.getAccountUsers(UUID.fromString(accountId));
+
+        this.logger.debug("output: retrieved {} users", users.size());
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = "/contracts",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -67,7 +67,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public List<UserDto> getAccountUsers(final AccountDto account) {
-        return null;
+    public List<UserDto> getAccountUsers(final UUID accountId) {
+        return new ArrayList<>();
     }
 }
