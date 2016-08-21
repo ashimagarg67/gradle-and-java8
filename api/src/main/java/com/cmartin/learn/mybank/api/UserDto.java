@@ -9,25 +9,15 @@ import java.util.UUID;
 /**
  * Created by cmartin on 16/07/16.
  */
-public class UserDto implements Serializable {
-    private UUID id;
-
+public class UserDto extends ResourceDto {
     public UserDto(UUID id) {
-        this.id = id;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+        super(id);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("id", id)
+                .append("id", this.getId())
                 .toString();
     }
 }

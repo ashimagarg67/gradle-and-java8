@@ -52,6 +52,20 @@ public interface BankService {
     Optional<AccountDto> getAccount(UUID accountId);
 
     /**
+     *
+     * @param accountId
+     * @return
+     */
+    List<AccountTransactionDto> getAccountTransactions(UUID accountId);
+
+    /**
+     *
+     * @param accountTransactionId
+     * @return
+     */
+    Optional<AccountTransactionDto> getAccountTransaction(UUID accountTransactionId);
+
+    /**
      * Retrieves a @{@link UserDto} by its internal id
      *
      * @param userId

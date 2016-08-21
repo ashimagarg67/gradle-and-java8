@@ -151,6 +151,26 @@ public class WebTest {
     }
 
     @Test
+    public void testGetAccountTransactions() throws Exception {
+        UUID accountId = UUID.randomUUID();
+
+        when(this.bankApi.getAccountTransactions(accountId))
+                .thenReturn(TestUtils.createAccountTransactions(COLLECTION_SIZE_5));
+
+        this.mockMvc.perform(get("/accounts/{accountId}/transactions", accountId))
+                .andDo(print())
+                .andExpect(statusOk)
+                .andExpect(contentTypeJson)
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$", hasSize(lessThanOrEqualTo(COLLECTION_SIZE_5))))
+        ;
+
+        verify(this.bankApi).getAccountTransactions(accountId);
+    }
+
+
+    @Test
     public void testGetAccountUsers() throws Exception {
         UUID accountId = UUID.randomUUID();
 

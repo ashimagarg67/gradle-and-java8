@@ -1,11 +1,14 @@
 package com.cmartin.learn.mybank.test;
 
 import com.cmartin.learn.mybank.api.AccountDto;
+import com.cmartin.learn.mybank.api.AccountTransactionDto;
 import com.cmartin.learn.mybank.api.ContractDto;
 import com.cmartin.learn.mybank.api.UserDto;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -72,8 +75,16 @@ public class TestUtils {
                 .collect(Collectors.toList());
     }
 
-    public static AccountDto newAccountDto(UUID id, String alias, String number, BigDecimal balance) {
+    public static AccountDto newAccountDto(
+            final UUID id, final String alias, final String number, final BigDecimal balance) {
         AccountDto dto = new AccountDto(id, alias, number, balance);
+
+        return dto;
+    }
+
+    public static AccountTransactionDto newAccountTransactionDto(
+            final UUID id, final BigDecimal amount, final LocalDateTime dateTime) {
+        AccountTransactionDto dto = new AccountTransactionDto(id, amount, dateTime);
 
         return dto;
     }
@@ -88,6 +99,14 @@ public class TestUtils {
 
     public static BigDecimal makeBigDecimal(final Double value) {
         return BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public static List<AccountTransactionDto> createAccountTransactions(final Integer count) {
+        return IntStream.rangeClosed(1, count)
+                .mapToObj(i -> newAccountTransactionDto(UUID.randomUUID(),
+                        makeBigDecimal(RandomUtils.nextDouble(0, 100)),
+                        LocalDateTime.now()))
+                .collect(Collectors.toList());
     }
 
 }

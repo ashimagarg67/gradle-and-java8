@@ -3,6 +3,7 @@ package com.cmartin.learn.mybank.service;
 import com.cmartin.learn.mybank.BankRepository;
 import com.cmartin.learn.mybank.api.AccountDto;
 import com.cmartin.learn.mybank.api.AccountFilter;
+import com.cmartin.learn.mybank.api.AccountTransactionDto;
 import com.cmartin.learn.mybank.api.BankService;
 import com.cmartin.learn.mybank.api.ContractDto;
 import com.cmartin.learn.mybank.api.ContractFilter;
@@ -53,6 +54,16 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Optional<AccountDto> getAccount(final UUID accountId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<AccountTransactionDto> getAccountTransactions(UUID accountId) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Optional<AccountTransactionDto> getAccountTransaction(UUID accountTransactionId) {
         return Optional.empty();
     }
 

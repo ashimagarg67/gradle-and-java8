@@ -2,6 +2,7 @@ package com.cmartin.learn.mybank.web.controller;
 
 import com.cmartin.learn.mybank.api.AccountDto;
 import com.cmartin.learn.mybank.api.AccountFilter;
+import com.cmartin.learn.mybank.api.AccountTransactionDto;
 import com.cmartin.learn.mybank.api.BankService;
 import com.cmartin.learn.mybank.api.ContractDto;
 import com.cmartin.learn.mybank.api.ContractFilter;
@@ -56,6 +57,20 @@ public class BankController {
         return new ResponseEntity<>(account.get(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/accounts/{accountId}/transactions",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<AccountTransactionDto>> getAccountTransactions(@PathVariable String accountId) {
+
+        this.logger.debug("input: accountId={}", accountId);
+
+        final List<AccountTransactionDto> accountTransactions =
+                this.bankService.getAccountTransactions(UUID.fromString(accountId));
+
+        this.logger.debug("output: retrieved {} accountTransactions", accountTransactions.size());
+
+        return new ResponseEntity<>(accountTransactions, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/accounts",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AccountDto>> getAccounts(
@@ -96,7 +111,7 @@ public class BankController {
         UserFilter filter = this.filterManager.buildUserFilter();
         final List<UserDto> users = this.bankService.getUsers(filter);
 
-        this.logger.debug("output: retrieved {} useres", users.size());
+        this.logger.debug("output: retrieved {} users", users.size());
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
