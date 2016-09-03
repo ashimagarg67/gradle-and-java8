@@ -19,7 +19,9 @@ public class AccountTransactionDto extends ResourceDto {
 
     @JsonSerialize(using = ToStringSerializer.class)
     private BigDecimal amount;
-    //TODO add serialization library to the classpath
+    /*TODO add serialization library to the classpath
+    https://github.com/FasterXML/jackson-datatype-jsr310
+     */
     @JsonFormat(pattern = ES_DATE_FORMAT)
     private LocalDateTime dateTime;
 
