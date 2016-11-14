@@ -11,3 +11,7 @@ Research and POCs with:
 - Continuous Integration
 - Software testing
 - Multimodule application
+
+Gradle:
+
+- gradle wrapper --gradle-version 3.1
