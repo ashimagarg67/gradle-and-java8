@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/butcherless/gradle-and-java8/badge.svg?branch=master)](https://coveralls.io/github/butcherless/gradle-and-java8?branch=master)
 
 Research and POCs with:
-- Gradle 2.1.x
+- Gradle 3.x
 - Java 8
 - Springframework 4.3.x
 - REST API
@@ -14,4 +14,5 @@ Research and POCs with:
 
 Gradle:
 
-- gradle wrapper --gradle-version 3.1
+- gradle wrapper --gradle-version 3.2
+- ./gradlew jettyRun
