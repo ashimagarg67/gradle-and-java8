@@ -112,10 +112,12 @@ project(':service') {
         compile project(':api')
         compile project(':repository')
         compile project(':shared')
+        testCompile project(':test-utils')
 
         compile libraries.commons_lang3
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
         compile group: 'org.springframework', name: 'spring-context', version: '4.3.2.RELEASE'
+        compile group: 'io.javaslang', name: 'javaslang', version: '2.0.4'
     }
 }
 
