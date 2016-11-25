@@ -44,9 +44,9 @@ subprojects {
     }
 
     ext.libraries = [ // Groovy map literal
-                      commons_lang3   : 'org.apache.commons:commons-lang3:3.4',
-                      jackson_core    : 'com.fasterxml.jackson.core:jackson-core:2.8.1',
-                      jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.8.1'
+                      commons_lang3   : 'org.apache.commons:commons-lang3:3.+',
+                      jackson_core    : 'com.fasterxml.jackson.core:jackson-core:2.8.+',
+                      jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.8.+'
     ]
 
     dependencies {
@@ -62,8 +62,8 @@ subprojects {
         }
 
 //        testCompile 'org.mockito:mockito-core:2.2.22'
-        testCompile 'org.mockito:mockito-core:+'
-        testCompile 'junit:junit:4.12'
+        testCompile 'org.mockito:mockito-core:2.+'
+        testCompile 'junit:junit:4.+'
     }
 
     jar {
@@ -115,9 +115,9 @@ project(':service') {
         testCompile project(':test-utils')
 
         compile libraries.commons_lang3
-        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
-        compile group: 'org.springframework', name: 'spring-context', version: '4.3.2.RELEASE'
-        compile group: 'io.javaslang', name: 'javaslang', version: '2.0.4'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+        compile group: 'org.springframework', name: 'spring-context', version: '4.+'
+        compile group: 'io.javaslang', name: 'javaslang', version: '2.0.+'
     }
 }
 
@@ -127,7 +127,7 @@ project(':webapp') {
     apply plugin: 'org.akhikhl.gretty'
 
     dependencies {
-        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
         compile project(':api')
         compile project(':domain')
         compile project(':shared')
@@ -136,8 +136,8 @@ project(':webapp') {
         testCompile project(':test-utils')
 
         compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-        compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.2.RELEASE'
-        testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.2.RELEASE'
+        compile group: 'org.springframework', name: 'spring-webmvc', version: '4.+'
+        testCompile group: 'org.springframework', name: 'spring-test', version: '4.+'
     }
 
     task increaseBuildVersion(type: BuildNumberGeneratorTask) {
