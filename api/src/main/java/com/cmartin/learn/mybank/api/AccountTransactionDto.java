@@ -33,7 +33,7 @@ public class AccountTransactionDto extends ResourceDto {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public BigDecimal getAmount() {
