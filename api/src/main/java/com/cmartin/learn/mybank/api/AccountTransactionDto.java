@@ -32,6 +32,10 @@ public class AccountTransactionDto extends ResourceDto {
         this.dateTime = dateTime;
     }
 
+    /**
+     * 
+     * @return
+     */
     public BigDecimal getAmount() {
         return amount;
     }

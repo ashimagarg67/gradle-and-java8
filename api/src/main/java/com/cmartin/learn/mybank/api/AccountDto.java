@@ -22,10 +22,18 @@ public class AccountDto extends ContractDto {
         this.balance = balance;
     }
 
+    /**
+     *
+     * @return
+     */
     public BigDecimal getBalance() {
         return balance;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNumber() {
         return number;
     }
