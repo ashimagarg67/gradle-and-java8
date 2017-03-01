@@ -9,6 +9,7 @@ public class Car {
     private String make;
     private String numberOfSeats;
     private BigInteger serialNumber;
+    private Engine engine;
 
     public Car() {
     }
@@ -36,5 +37,13 @@ public class Car {
 
     public void setSerialNumber(BigInteger serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 }

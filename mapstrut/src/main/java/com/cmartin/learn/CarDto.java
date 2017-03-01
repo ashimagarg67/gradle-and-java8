@@ -7,6 +7,9 @@ public class CarDto {
     private String manufacturer;
     private String seatCount;
     private Long serial;
+    private String engineCode;
+    private String cylinderCount;
+    private String uCode;
 
     public CarDto() {
     }
@@ -33,5 +36,29 @@ public class CarDto {
 
     public void setSerial(Long serial) {
         this.serial = serial;
+    }
+
+    public String getEngineCode() {
+        return engineCode;
+    }
+
+    public void setEngineCode(String engineCode) {
+        this.engineCode = engineCode;
+    }
+
+    public String getCylinderCount() {
+        return cylinderCount;
+    }
+
+    public void setCylinderCount(String cylinderCount) {
+        this.cylinderCount = cylinderCount;
+    }
+
+    public String getuCode() {
+        return uCode;
+    }
+
+    public void setuCode(String uCode) {
+        this.uCode = uCode;
     }
 }
