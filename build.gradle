@@ -96,14 +96,14 @@ project(':repository') {
     dependencies {
         compile project(':domain')
 
-        compile(group: 'org.springframework.data', name: 'spring-data-neo4j', version: '4.1.2.RELEASE') {
-            exclude module: 'commons-codec'
-            exclude module: 'jackson-databind'
-            exclude module: 'spring-beans'
-            exclude module: 'spring-context'
-            exclude module: 'spring-core'
-            exclude module: 'slf4j-api'
-        }
+//        compile(group: 'org.springframework.data', name: 'spring-data-neo4j', version: '4.1.2.RELEASE') {
+//            exclude module: 'commons-codec'
+//            exclude module: 'jackson-databind'
+//            exclude module: 'spring-beans'
+//            exclude module: 'spring-context'
+//            exclude module: 'spring-core'
+//            exclude module: 'slf4j-api'
+//        }
     }
 }
 
@@ -150,7 +150,7 @@ project(':webapp') {
     // but not support non-jar WebApplicationInitializer scanning.
     // It will cause "No Spring WebApplicationInitializer types detected on classpath"
     gretty {
-        port = 8081
+        httpPort = 8081
         contextPath = 'mybank'
         servletContainer = 'jetty9' //tomcat7 or tomcat8
     }
