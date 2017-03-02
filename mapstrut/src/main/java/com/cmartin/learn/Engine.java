@@ -1,5 +1,6 @@
 package com.cmartin.learn;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -8,7 +9,7 @@ import java.util.UUID;
 public class Engine {
     private Long code;
     private Integer pistonCount;
-    private Piston piston;
+    private List<Piston> pistons;
     private UUID universalCode;
 
     public Long getCode() {
@@ -35,11 +36,11 @@ public class Engine {
         this.universalCode = universalCode;
     }
 
-    public Piston getPiston() {
-        return piston;
+    public List<Piston> getPistons() {
+        return pistons;
     }
 
-    public void setPiston(Piston piston) {
-        this.piston = piston;
+    public void setPistons(List<Piston> pistons) {
+        this.pistons = pistons;
     }
 }

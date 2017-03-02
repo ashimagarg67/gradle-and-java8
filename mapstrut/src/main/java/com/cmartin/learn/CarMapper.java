@@ -3,10 +3,13 @@ package com.cmartin.learn;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = {CarConverters.class})
 //@DecoratedWith(CarMapperDecorator.class)
 public interface CarMapper {
+
+    CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
 
     @Mappings({
             @Mapping(source = "make", target = "manufacturer"),
@@ -15,12 +18,9 @@ public interface CarMapper {
             @Mapping(source = "engine.code", target = "engineCode"),
             @Mapping(source = "engine.pistonCount", target = "cylinderCount"),
             @Mapping(source = "engine.universalCode", target = "uCode"),
-            @Mapping(source = "engine.piston", target = "pistonCaliber")
+            @Mapping(source = "engine.pistons", target = "pistons")
 
     })
     CarDto carToCarDto(Car car);
 
-
-//    @Mapping(source = "name", target = "fullName")
-//    PersonDto personToPersonDto(Person person);
 }

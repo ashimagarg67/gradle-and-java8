@@ -1,5 +1,7 @@
 package com.cmartin.learn;
 
+import java.util.List;
+
 /**
  * Created by cmartin on 28/02/2017.
  */
@@ -10,10 +12,7 @@ public class CarDto {
     private String engineCode;
     private String cylinderCount;
     private String uCode;
-    private String pistonCaliber;
-
-    public CarDto() {
-    }
+    private List<String> pistons;
 
     public String getManufacturer() {
         return manufacturer;
@@ -63,11 +62,11 @@ public class CarDto {
         this.uCode = uCode;
     }
 
-    public String getPistonCaliber() {
-        return pistonCaliber;
+    public List<String> getPistons() {
+        return pistons;
     }
 
-    public void setPistonCaliber(String pistonCaliber) {
-        this.pistonCaliber = pistonCaliber;
+    public void setPistons(List<String> pistons) {
+        this.pistons = pistons;
     }
 }
