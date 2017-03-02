@@ -8,6 +8,7 @@ import java.util.UUID;
 public class Engine {
     private Long code;
     private Integer pistonCount;
+    private Piston piston;
     private UUID universalCode;
 
     public Long getCode() {
@@ -32,5 +33,13 @@ public class Engine {
 
     public void setUniversalCode(UUID universalCode) {
         this.universalCode = universalCode;
+    }
+
+    public Piston getPiston() {
+        return piston;
+    }
+
+    public void setPiston(Piston piston) {
+        this.piston = piston;
     }
 }

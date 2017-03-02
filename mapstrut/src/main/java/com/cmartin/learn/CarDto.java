@@ -10,6 +10,7 @@ public class CarDto {
     private String engineCode;
     private String cylinderCount;
     private String uCode;
+    private String pistonCaliber;
 
     public CarDto() {
     }
@@ -60,5 +61,13 @@ public class CarDto {
 
     public void setuCode(String uCode) {
         this.uCode = uCode;
+    }
+
+    public String getPistonCaliber() {
+        return pistonCaliber;
+    }
+
+    public void setPistonCaliber(String pistonCaliber) {
+        this.pistonCaliber = pistonCaliber;
     }
 }
