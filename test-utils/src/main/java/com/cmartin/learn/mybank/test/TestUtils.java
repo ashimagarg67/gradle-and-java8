@@ -1,9 +1,6 @@
 package com.cmartin.learn.mybank.test;
 
-import com.cmartin.learn.mybank.api.AccountDto;
-import com.cmartin.learn.mybank.api.AccountTransactionDto;
-import com.cmartin.learn.mybank.api.ContractDto;
-import com.cmartin.learn.mybank.api.UserDto;
+import com.cmartin.learn.mybank.api.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -65,6 +62,10 @@ public class TestUtils {
         ContractDto dto = new ContractDto(id, alias);
 
         return dto;
+    }
+
+    public static AccountListDto createAccountList() {
+        return new AccountListDto(null);
     }
 
     public static List<AccountDto> createAccounts(final Integer count) {

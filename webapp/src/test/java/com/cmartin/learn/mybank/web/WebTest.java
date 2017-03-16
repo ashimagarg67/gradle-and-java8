@@ -110,9 +110,10 @@ public class WebTest {
                 .andDo(print())
                 .andExpect(statusOk)
                 .andExpect(contentTypeJson)
-                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").isNotEmpty())
-                .andExpect(jsonPath("$", hasSize(lessThanOrEqualTo(COLLECTION_SIZE_5))));
+                .andExpect(jsonPath("$.accounts").isArray())
+                .andExpect(jsonPath("$.accounts", hasSize(lessThanOrEqualTo(COLLECTION_SIZE_5))))
+                .andExpect(jsonPath("$.localDate").isNotEmpty());
 
         verify(this.bankApi).getAccounts(any(AccountFilter.class));
     }
