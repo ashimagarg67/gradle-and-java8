@@ -1,13 +1,6 @@
 package com.cmartin.learn.mybank.web.controller;
 
-import com.cmartin.learn.mybank.api.AccountDto;
-import com.cmartin.learn.mybank.api.AccountFilter;
-import com.cmartin.learn.mybank.api.AccountTransactionDto;
-import com.cmartin.learn.mybank.api.BankService;
-import com.cmartin.learn.mybank.api.ContractDto;
-import com.cmartin.learn.mybank.api.ContractFilter;
-import com.cmartin.learn.mybank.api.UserDto;
-import com.cmartin.learn.mybank.api.UserFilter;
+import com.cmartin.learn.mybank.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +81,7 @@ public class BankController {
 
     @GetMapping(value = "/accounts",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<AccountDto>> getAccounts(
+    public ResponseEntity<AccountListDto> getAccounts(
             @RequestParam(required = false, defaultValue = "10") final Integer pageSize) {
 
         this.logger.debug("input: pageSize={}", pageSize);
@@ -96,9 +89,9 @@ public class BankController {
         AccountFilter filter = this.filterManager.buildAccoutFilter();
         final List<AccountDto> accounts = this.bankService.getAccounts((filter));
 
-        this.logger.debug("output: retrieved {} accounts", accounts.toString());
+        this.logger.debug("output: retrieved {} accounts", accounts.size());
 
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
+        return new ResponseEntity<>(new AccountListDto(accounts), HttpStatus.OK);
     }
 
 

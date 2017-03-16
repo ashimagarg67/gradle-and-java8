@@ -44,7 +44,8 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public List<AccountDto> getAccounts(final AccountFilter filter) {
-        return new ArrayList<>();
+               // new ArrayList<>();
+        return DtoFactory.newAccountList();
     }
 
     @Override

@@ -19,7 +19,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'project-report'
-//    apply plugin: "jacoco"
+    apply plugin: "jacoco"
     apply plugin: 'announce'
 
     group = 'com.cmartin.learn'
