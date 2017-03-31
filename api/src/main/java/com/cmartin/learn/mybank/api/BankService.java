@@ -1,5 +1,7 @@
 package com.cmartin.learn.mybank.api;
 
+import javaslang.control.Try;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,56 +12,48 @@ import java.util.UUID;
 public interface BankService {
     /**
      * @param operationInputDto
-     *
      * @return
      */
-    OperationOutputDto operation(OperationInputDto operationInputDto);
+    Try<OperationOutputDto> operation(OperationInputDto operationInputDto);
 
 
     /**
      * @param filter
-     *
      * @return
      */
     List<ContractDto> getContracts(ContractFilter filter);
 
     /**
      * @param userId
-     *
      * @return
      */
     List<ContractDto> getUserContracts(UUID userId);
 
     /**
      * @param filter
-     *
      * @return
      */
     List<AccountDto> getAccounts(AccountFilter filter);
 
     /**
      * @param userId
-     *
      * @return
      */
     List<AccountDto> getUserAccounts(UUID userId);
 
     /**
      * @param accountId
-     *
      * @return
      */
     Optional<AccountDto> getAccount(UUID accountId);
 
     /**
-     *
      * @param accountId
      * @return
      */
     List<AccountTransactionDto> getAccountTransactions(UUID accountId);
 
     /**
-     *
      * @param accountTransactionId
      * @return
      */
@@ -69,7 +63,6 @@ public interface BankService {
      * Retrieves a @{@link UserDto} by its internal id
      *
      * @param userId
-     *
      * @return
      */
     Optional<UserDto> getUser(UUID userId);
@@ -78,7 +71,6 @@ public interface BankService {
      * Retrieves a @{@link UserDto} list depending on a @{@link UserFilter}
      *
      * @param filter
-     *
      * @return
      */
     List<UserDto> getUsers(UserFilter filter);
@@ -87,7 +79,6 @@ public interface BankService {
      * Retrieves the account owner or participants.
      *
      * @param accountId
-     *
      * @return
      */
     List<UserDto> getAccountUsers(UUID accountId);

@@ -11,6 +11,7 @@ import com.cmartin.learn.mybank.api.OperationInputDto;
 import com.cmartin.learn.mybank.api.OperationOutputDto;
 import com.cmartin.learn.mybank.api.UserDto;
 import com.cmartin.learn.mybank.api.UserFilter;
+import javaslang.control.Try;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,8 +29,8 @@ public class BankServiceImpl implements BankService {
     private BankRepository bankRepository;
 
     @Override
-    public OperationOutputDto operation(final OperationInputDto operationInputDto) {
-        return new OperationOutputDto("dummyProperty");
+    public Try<OperationOutputDto> operation(final OperationInputDto operationInputDto) {
+        return Try.success(new OperationOutputDto("dummyProperty"));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public List<AccountDto> getAccounts(final AccountFilter filter) {
-               // new ArrayList<>();
+        // new ArrayList<>();
         return DtoFactory.newAccountList();
     }
 

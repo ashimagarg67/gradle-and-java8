@@ -1,5 +1,6 @@
 package com.cmartin.learn.mybank.api;
 
+import javaslang.control.Try;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,27 +17,48 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BankApiTest {
 
+    protected String successDummyProperty = "OkDummyProperty";
+    protected String failureDummyProperty = "KoDummyProperty";
+    protected OperationOutputDto successOutputDto = new OperationOutputDto(successDummyProperty);
+    protected OperationOutputDto failureOutputDto = new OperationOutputDto(failureDummyProperty);
+    protected OperationInputDto operationInputDto;
+
     @Mock
     protected BankService api;
 
     @Before
     public void setup() {
-
+        this.operationInputDto = new OperationInputDto(successDummyProperty);
     }
 
     @Test
-    public void testOperation() {
-        String dummyProperty = "dummyProperty";
-        OperationInputDto operationInputDto = new OperationInputDto(dummyProperty);
-        OperationOutputDto operationOutputDto = new OperationOutputDto(dummyProperty);
+    public void testOperationOk() {
+        when(this.api.operation(this.operationInputDto))
+                .thenReturn(Try.success(this.successOutputDto));
 
-        when(this.api.operation(operationInputDto))
-                .thenReturn(new OperationOutputDto(dummyProperty));
+        final Try<OperationOutputDto> operation = this.api.operation(this.operationInputDto);
 
-        final OperationOutputDto operation = this.api.operation(operationInputDto);
+        verify(this.api).operation(this.operationInputDto);
 
-        verify(this.api).operation(operationInputDto);
+        OperationOutputDto resultDto = operation.getOrElse(this.failureOutputDto);
 
-        Assert.assertNotNull(operationOutputDto);
+        Assert.assertTrue(operation.isSuccess());
+        Assert.assertEquals(resultDto.getDummyProperty(), this.successDummyProperty);
+    }
+
+    @Test
+    public void testOperationKo() {
+        when(this.api.operation(this.operationInputDto))
+                .thenReturn(Try.failure(new ServiceException(failureDummyProperty)));
+
+        final Try<OperationOutputDto> operation = this.api.operation(this.operationInputDto);
+
+        verify(this.api).operation(this.operationInputDto);
+
+        OperationOutputDto resultDto = operation.getOrElse(this.failureOutputDto);
+
+        Assert.assertTrue(operation.isFailure());
+        Assert.assertEquals(resultDto.getDummyProperty(), this.failureDummyProperty);
+        Assert.assertEquals(operation.getCause().getMessage(), this.failureDummyProperty);
     }
 }
