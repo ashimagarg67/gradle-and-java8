@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 /**
  * Created by cmartin on 12/05/2017.
  */
-public class CUPrinter 
+public class CUPrinter {
 
     public static final String SMC_PATH = "/Users/cmartin/projects/bbva-2017/stash/customerbudgets/src/main/java";
     private static final String JAVA_EXTENDSION = ".java";
