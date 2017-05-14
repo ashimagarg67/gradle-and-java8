@@ -17,6 +17,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import static org.apache.commons.lang3.StringUtils.join;
+
 /**
  * Created by cmartin on 12/05/2017.
  */
@@ -24,12 +26,14 @@ public class CUPrinter {
 
     public static final String SMC_PATH = "/Users/cmartin/projects/bbva-2017/stash/customerbudgets/src/main/java";
     private static final String JAVA_EXTENDSION = ".java";
+    private static final String DTO_SELECTOR = "dto";
+    private static final String TOKEN_SEPARATOR = " : ";
 
     public static void main(String[] args) throws IOException {
         //readAllFiles(SMC_PATH);
 
         readAllDirectories(SMC_PATH).forEach(path ->
-                printVariables(path.getPath()));
+                printInfo(path.getPath()));
 
         if (true) return;
         // creates an input stream for the file to be parsed
@@ -45,6 +49,21 @@ public class CUPrinter {
 
         // prints the resulting compilation unit to default system output
         // System.out.println(cu.toString());
+    }
+
+    private static void printInfo(final String path) {
+        try {
+            FileInputStream in = new FileInputStream(path);
+            CompilationUnit cu = JavaParser.parse(in);
+            new ClassVisitor().visit(cu, null);
+            ToStringFinder toStringFinder = new ToStringFinder();
+            toStringFinder.visit(cu, null);
+            System.out.println(join("hasToStringMethod: ", toStringFinder.hasToStringMethod()));
+            new VariableVisitor().visit(cu, null);
+            System.out.println();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void printVariables(final String path) {
@@ -65,7 +84,7 @@ public class CUPrinter {
         return Files.walk(Paths.get(path), FileVisitOption.FOLLOW_LINKS)
                 .map(Path::toFile)
                 .filter(File::isFile)
-                .filter(f -> f.getPath().contains("dto"))
+                .filter(f -> f.getPath().contains(DTO_SELECTOR))
                 .filter(f -> f.getName().endsWith(JAVA_EXTENDSION));
         //.forEach(System.out::println);
     }
@@ -77,6 +96,28 @@ public class CUPrinter {
                 //.filter(f -> f.getFileName().endsWith(".java"))
                 .forEach(System.out::println);
     }
+
+    private static class ToStringFinder extends VoidVisitorAdapter<Void> {
+        private Boolean result = false;
+
+        @Override
+        public void visit(ClassOrInterfaceDeclaration c, Void arg) {
+            //TODO refactor hasToStringMethod()
+            result = c.getMethods()
+                    .stream()
+                    .map(method -> method.getNameAsString())
+                    .anyMatch(name -> name.equals("toString"));
+            //.filter(name -> name.equals("toString"));
+            //.forEach(e -> System.out.println("method: " + e.toString() + " - " + e.getClass()));
+            //
+            super.visit(c, arg);
+        }
+
+        public Boolean hasToStringMethod() {
+            return result;
+        }
+    }
+
 
     private static class ClassVisitor extends VoidVisitorAdapter<Void> {
         @Override
@@ -103,8 +144,9 @@ public class CUPrinter {
     private static class VariableVisitor extends VoidVisitorAdapter<Void> {
         @Override
         public void visit(VariableDeclarator v, Void arg) {
-            System.out.println(v.getType());
+            System.out.println(join(v.getName(), TOKEN_SEPARATOR, v.getType()));
             super.visit(v, arg);
         }
     }
+
 }
