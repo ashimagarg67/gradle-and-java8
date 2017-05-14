@@ -2,7 +2,9 @@ package com.cmartin.learn;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
@@ -56,10 +58,11 @@ public class CUPrinter {
             FileInputStream in = new FileInputStream(path);
             CompilationUnit cu = JavaParser.parse(in);
             new ClassVisitor().visit(cu, null);
+            new FieldDeclarationVisitor().visit(cu, null);
             ToStringFinder toStringFinder = new ToStringFinder();
             toStringFinder.visit(cu, null);
             System.out.println(join("hasToStringMethod: ", toStringFinder.hasToStringMethod()));
-            new VariableVisitor().visit(cu, null);
+            //new VariableVisitor().visit(cu, null);
             System.out.println();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -90,13 +93,6 @@ public class CUPrinter {
     }
 
 
-    private static void readAllFiles(final String path) throws IOException {
-        Files.list(Paths.get(path))
-                .filter(Files::isRegularFile)
-                //.filter(f -> f.getFileName().endsWith(".java"))
-                .forEach(System.out::println);
-    }
-
     private static class ToStringFinder extends VoidVisitorAdapter<Void> {
         private Boolean result = false;
 
@@ -118,7 +114,6 @@ public class CUPrinter {
         }
     }
 
-
     private static class ClassVisitor extends VoidVisitorAdapter<Void> {
         @Override
         public void visit(ClassOrInterfaceDeclaration c, Void arg) {
@@ -126,6 +121,17 @@ public class CUPrinter {
             super.visit(c, arg);
         }
     }
+
+    private static class FieldDeclarationVisitor extends VoidVisitorAdapter<Void> {
+        @Override
+        public void visit(FieldDeclaration fd, Void arg) {
+            if(!fd.getModifiers().contains(Modifier.STATIC)) {
+                System.out.println(join("field: ", fd.getVariable(0).getNameAsString(), ", type: ", fd.getElementType()));
+            }
+            super.visit(fd, arg);
+        }
+    }
+
 
     /**
      * Simple visitor implementation for visiting MethodDeclaration nodes.
