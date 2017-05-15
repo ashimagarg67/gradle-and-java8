@@ -7,6 +7,8 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.stmt.BlockStmt;
+import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.File;
@@ -17,9 +19,13 @@ import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.join;
+import static org.apache.commons.lang3.StringUtils.repeat;
 
 /**
  * Created by cmartin on 12/05/2017.
@@ -32,22 +38,26 @@ public class CUPrinter {
     private static final String TOKEN_SEPARATOR = " : ";
 
     public static void main(String[] args) throws IOException {
+        System.out.println("-------------------> " + CUPrinter.class.getSimpleName());
         //readAllFiles(SMC_PATH);
 
-        readAllDirectories(SMC_PATH).forEach(path ->
-                printInfo(path.getPath()));
+        // show DTOs info
+        //readAllDirectories(SMC_PATH).forEach(path -> printInfo(path.getPath()));
+        //if (true) return;
 
-        if (true) return;
         // creates an input stream for the file to be parsed
-        FileInputStream in = new FileInputStream("/tmp/Money.java");
+        FileInputStream in = new FileInputStream("/Users/cmartin/projects/bbva-2017/stash/customerbudgets/src/main/java/com/bbva/epcl/customerbudgets/business/dto/DTOIntCustomerBudgetCopy.java");
 
         // parse the file
         CompilationUnit cu = JavaParser.parse(in);
 
         // visit and print the methods names
-        new MethodVisitor().visit(cu, null);
+        //new MethodVisitor().visit(cu, null);
 
-        new VariableVisitor().visit(cu, null);
+        ToStringMethodGenerator generator = new ToStringMethodGenerator();
+        generator.visit(cu, null);
+        System.out.println("property count: " + generator.getPropertyCount());
+        generator.generateToStringMethod();
 
         // prints the resulting compilation unit to default system output
         // System.out.println(cu.toString());
@@ -125,7 +135,7 @@ public class CUPrinter {
     private static class FieldDeclarationVisitor extends VoidVisitorAdapter<Void> {
         @Override
         public void visit(FieldDeclaration fd, Void arg) {
-            if(!fd.getModifiers().contains(Modifier.STATIC)) {
+            if (!fd.getModifiers().contains(Modifier.STATIC)) {
                 System.out.println(join("field: ", fd.getVariable(0).getNameAsString(), ", type: ", fd.getElementType()));
             }
             super.visit(fd, arg);
@@ -152,6 +162,60 @@ public class CUPrinter {
         public void visit(VariableDeclarator v, Void arg) {
             System.out.println(join(v.getName(), TOKEN_SEPARATOR, v.getType()));
             super.visit(v, arg);
+        }
+    }
+
+
+    private static class ToStringMethodGenerator extends VoidVisitorAdapter<Void> {
+        private List<FieldDeclaration> fields = new ArrayList<>();
+
+        @Override
+        public void visit(FieldDeclaration fd, Void arg) {
+            EnumSet<Modifier> modifiers = fd.getModifiers();
+
+            if (!modifiers.contains(Modifier.STATIC) && (modifiers.contains(Modifier.PRIVATE))) {
+                String nameAsString = fd.getVariable(0).getNameAsString();
+                System.out.println(join("field: ", nameAsString, ", type: ", fd.getElementType()));
+                this.fields.add(fd);
+            }
+            super.visit(fd, arg);
+        }
+
+        public Integer getPropertyCount() {
+            return this.fields.size();
+        }
+
+        public void generateToStringMethod() {
+            MethodDeclaration md = new MethodDeclaration();
+            md.setPublic(true);
+            md.setType(String.class.getSimpleName());
+            md.setName("toString");
+            md.addMarkerAnnotation("Override");
+
+            StringBuilder sb = new StringBuilder("new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)");
+            for (FieldDeclaration field : this.fields) {
+                sb.append(createAppendStatement(field));
+            }
+            sb.append(join('\n', repeat(' ', 8), ".toString()"));
+
+            BlockStmt blockStmt = new BlockStmt();
+            md.setBody(blockStmt);
+            blockStmt.addStatement(new ReturnStmt(sb.toString()));
+
+            System.out.println(md.toString());
+            //new MethodDeclaration(EnumSet.of(Modifier.PUBLIC), )
+        }
+
+        private String createAppendStatement(final FieldDeclaration fieldDeclaration) {
+            String typename = fieldDeclaration.getCommonType().toString();
+            String fieldname = fieldDeclaration.getVariable(0).getNameAsString();
+            String subStatement = join('\n', repeat(' ', 8), ".append(\"", fieldname, "\", ", fieldname);
+
+            if (typename.startsWith("List")) {
+                return join(subStatement, ".size())");
+            } else {
+                return join(subStatement, ")");
+            }
         }
     }
 
