@@ -167,6 +167,7 @@ public class CUPrinter {
 
 
     private static class ToStringMethodGenerator extends VoidVisitorAdapter<Void> {
+        private MethodDeclaration md = new MethodDeclaration();
         private List<FieldDeclaration> fields = new ArrayList<>();
 
         @Override
@@ -185,8 +186,11 @@ public class CUPrinter {
             return this.fields.size();
         }
 
+        public String getToString() {
+            return md.toString();
+        }
+
         public void generateToStringMethod() {
-            MethodDeclaration md = new MethodDeclaration();
             md.setPublic(true);
             md.setType(String.class.getSimpleName());
             md.setName("toString");
@@ -202,8 +206,7 @@ public class CUPrinter {
             md.setBody(blockStmt);
             blockStmt.addStatement(new ReturnStmt(sb.toString()));
 
-            System.out.println(md.toString());
-            //new MethodDeclaration(EnumSet.of(Modifier.PUBLIC), )
+            System.out.println(this.getToString());
         }
 
         private String createAppendStatement(final FieldDeclaration fieldDeclaration) {
