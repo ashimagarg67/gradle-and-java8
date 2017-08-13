@@ -3,8 +3,8 @@ package com.cmartin.learn.mybank.service;
 
 import com.cmartin.learn.mybank.api.AccountDto;
 import com.cmartin.learn.mybank.test.TestUtils;
-import javaslang.collection.List;
-import javaslang.control.Validation;
+import io.vavr.collection.Seq;
+import io.vavr.control.Validation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class ValidationTest {
     @Test
     public void testValidAccountDto() {
         AccountDto accountDto = TestUtils.newAccountDto(ID, ALIAS, NUMBER, BALANCE);
-        Validation<List<String>, AccountDto> result = accountDtoValidator.validateAccountDto(accountDto);
+        Validation<Seq<String>, AccountDto> result = accountDtoValidator.validateAccountDto(accountDto);
 
         Assert.assertTrue(result.isValid());
         Assert.assertTrue(result.get().getId().equals(ID));
@@ -45,7 +45,7 @@ public class ValidationTest {
     @Test
     public void testInValidAccountDto() {
         AccountDto accountDto = TestUtils.newAccountDto(null, "", "", null);
-        Validation<List<String>, AccountDto> result = accountDtoValidator.validateAccountDto(accountDto);
+        Validation<Seq<String>, AccountDto> result = accountDtoValidator.validateAccountDto(accountDto);
 
         Assert.assertTrue(result.isInvalid());
     }

@@ -1,8 +1,8 @@
 package com.cmartin.learn.mybank.service;
 
 import com.cmartin.learn.mybank.api.AccountDto;
-import javaslang.collection.List;
-import javaslang.control.Validation;
+import io.vavr.collection.Seq;
+import io.vavr.control.Validation;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class AccountDtoValidator {
 
 
-    public Validation<List<String>, AccountDto> validateAccountDto(final AccountDto accountDto) {
+    public Validation<Seq<String>, AccountDto> validateAccountDto(final AccountDto accountDto) {
         return Validation.combine(
                 validateId(accountDto.getId()),
                 validateAlias(accountDto.getAlias()),

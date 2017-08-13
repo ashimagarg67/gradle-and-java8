@@ -1,13 +1,16 @@
 package com.cmartin.learn.mybank.test;
 
-import com.cmartin.learn.mybank.api.*;
-import org.apache.commons.lang3.RandomStringUtils;
+import com.cmartin.learn.mybank.api.AccountDto;
+import com.cmartin.learn.mybank.api.AccountListDto;
+import com.cmartin.learn.mybank.api.AccountTransactionDto;
+import com.cmartin.learn.mybank.api.ContractDto;
+import com.cmartin.learn.mybank.api.UserDto;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.text.RandomStringGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -94,8 +97,9 @@ public class TestUtils {
 
     public static String makePseudoIBANAccount() {
         // country (2) + number (22) ES9<-22->1
-        return RandomStringUtils.randomAlphabetic(2).toUpperCase() +
-                RandomStringUtils.randomNumeric(22);
+        RandomStringGenerator generator = new RandomStringGenerator.Builder().build();
+        generator.generate(2);
+        return buildCapitalString(2) + buildNumberString(22);
 
     }
 
@@ -109,6 +113,18 @@ public class TestUtils {
                         makeBigDecimal(RandomUtils.nextDouble(0, 100)),
                         LocalDateTime.now()))
                 .collect(Collectors.toList());
+    }
+
+    private static String buildCapitalString(final Integer length) {
+        return new RandomStringGenerator.Builder()
+                .withinRange('A', 'Z')
+                .build().generate(length);
+    }
+
+    private static String buildNumberString(final Integer length) {
+        return new RandomStringGenerator.Builder()
+                .withinRange('0', '9')
+                .build().generate(length);
     }
 }
 

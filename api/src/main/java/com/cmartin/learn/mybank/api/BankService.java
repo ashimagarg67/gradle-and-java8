@@ -1,6 +1,7 @@
 package com.cmartin.learn.mybank.api;
 
-import javaslang.control.Try;
+
+import io.vavr.control.Try;
 
 import java.util.List;
 import java.util.Optional;

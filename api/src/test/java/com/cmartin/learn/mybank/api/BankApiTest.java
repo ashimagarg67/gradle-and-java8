@@ -1,6 +1,6 @@
 package com.cmartin.learn.mybank.api;
 
-import javaslang.control.Try;
+import io.vavr.control.Try;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

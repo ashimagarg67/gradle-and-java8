@@ -11,7 +11,7 @@ import com.cmartin.learn.mybank.api.OperationInputDto;
 import com.cmartin.learn.mybank.api.OperationOutputDto;
 import com.cmartin.learn.mybank.api.UserDto;
 import com.cmartin.learn.mybank.api.UserFilter;
-import javaslang.control.Try;
+import io.vavr.control.Try;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
