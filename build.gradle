@@ -4,7 +4,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.akhikhl.gretty:gretty:+'
+        classpath 'org.akhikhl.gretty:gretty:+',
+                'net.saliman:gradle-cobertura-plugin:2.5.0'
     }
 }
 
@@ -21,6 +22,7 @@ subprojects {
     apply plugin: 'project-report'
     apply plugin: "jacoco"
     apply plugin: 'announce'
+    apply plugin: "net.saliman.cobertura"
 
     group = 'com.cmartin.learn'
     version = '1.0.0-SNAPSHOT'
