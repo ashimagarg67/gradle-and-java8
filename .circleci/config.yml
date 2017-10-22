@@ -1,0 +1,10 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/circleci-gradle-java
+    docker:
+      - image: circleci/java
+    steps:
+      - checkout
+      - run: ./gradlew clean build
