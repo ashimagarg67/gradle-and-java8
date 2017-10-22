@@ -17,3 +17,4 @@ Gradle:
 
 - gradle wrapper --gradle-version 3.2
 - ./gradlew jettyRun
+- curl http://localhost:8081/mybank/accounts
