@@ -25,7 +25,7 @@ subprojects {
     apply plugin: "net.saliman.cobertura"
 
     group = 'com.cmartin.learn'
-    version = '1.0.0-SNAPSHOT'
+    version = '1.0.1-SNAPSHOT'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -48,13 +48,13 @@ subprojects {
     ext.libraries = [ // Groovy map literal
                       commons_lang3   : 'org.apache.commons:commons-lang3:3.+',
                       commons_text    : 'org.apache.commons:commons-text:1.+',
-                      jackson_core    : 'com.fasterxml.jackson.core:jackson-core:2.8.+',
-                      jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.8.+',
+                      jackson_core    : 'com.fasterxml.jackson.core:jackson-core:2.9.+',
+                      jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.9.+',
                       vavr            : "io.vavr:vavr:0.9.+"
     ]
 
     dependencies {
-        compile(group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7') {
+        compile(group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.+') {
             exclude module: 'slf4j-api'
         }
 
@@ -65,7 +65,7 @@ subprojects {
             exclude module: 'slf4j-api'
         }
 
-//        testCompile 'org.mockito:mockito-core:2.2.22'
+//        testCompile 'org.mockito:mockito-core:2.11.0'
         testCompile 'org.mockito:mockito-core:2.+'
         testCompile 'junit:junit:4.+'
     }
