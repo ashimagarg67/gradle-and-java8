@@ -15,6 +15,6 @@ Research and POCs with:
 
 Gradle:
 
-- gradle wrapper --gradle-version 3.2
+- gradle wrapper --gradle-version 4.3
 - ./gradlew jettyRun
 - curl http://localhost:8081/mybank/accounts
