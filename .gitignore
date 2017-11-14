@@ -1,5 +1,7 @@
-build
-target
+bin/
+build/
+out/
+target/
 .classpath
 .gradle
 .idea
@@ -7,4 +9,3 @@ target
 .settings
 .DS_Store
 *.iml
-out/
