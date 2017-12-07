@@ -32,7 +32,7 @@ import static org.apache.commons.lang3.StringUtils.repeat;
  */
 public class CUPrinter {
 
-    public static final String SMC_PATH = "/Users/cmartin/projects/bbva-2017/stash/customerbudgets/src/main/java";
+    public static final String SMC_PATH = "/Users/cmartin/projects/stash/customerbudgets/src/main/java";
     private static final String JAVA_EXTENDSION = ".java";
     private static final String DTO_SELECTOR = "dto";
     private static final String TOKEN_SEPARATOR = " : ";
@@ -46,7 +46,7 @@ public class CUPrinter {
         //if (true) return;
 
         // creates an input stream for the file to be parsed
-        FileInputStream in = new FileInputStream("/Users/cmartin/projects/bbva-2017/stash/customerbudgets/src/main/java/com/bbva/epcl/customerbudgets/business/dto/DTOIntCustomerBudgetCopy.java");
+        FileInputStream in = new FileInputStream("/Users/cmartin/projects/stash/customerbudgets/src/main/java/com/customerbudgets/business/dto/DTOIntCustomerBudgetCopy.java");
 
         // parse the file
         CompilationUnit cu = JavaParser.parse(in);
