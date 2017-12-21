@@ -11,10 +11,7 @@ import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,9 +34,31 @@ public class CUPrinter {
     private static final String DTO_SELECTOR = "dto";
     private static final String TOKEN_SEPARATOR = " : ";
 
+
     public static void main(String[] args) throws IOException {
+        final String SERVICE = "/Users/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/api/BankService.java";
+        System.out.println("START: Javaparser");
+        CompilationUnit cu = JavaParser.parse(new FileReader(SERVICE));
+        new ClassVisitor().visit(cu, null);
+        new MethodListVisitor().visit(cu, null);
+
+        Files.walk(Paths.get("/Users/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/"), FileVisitOption.FOLLOW_LINKS)
+                .map(x -> x.toFile())
+                .filter(File::isFile)
+                .forEach(System.out::println)
+        //.count()
+        ;
+        // System.out.println("file count: " + count);
+
+        Stream<File> fileStream = readAllDirectories("/Users/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/api/");
+        //fileStream.forEach(System.out::println);
+
+        System.out.println("STOP: Javaparser");
+    }
+
+
+    public static void main_(String[] args) throws IOException {
         System.out.println("-------------------> " + CUPrinter.class.getSimpleName());
-        //readAllFiles(SMC_PATH);
 
         // show DTOs info
         //readAllDirectories(SMC_PATH).forEach(path -> printInfo(path.getPath()));
@@ -61,6 +80,21 @@ public class CUPrinter {
 
         // prints the resulting compilation unit to default system output
         // System.out.println(cu.toString());
+    }
+
+
+    private static class MethodListVisitor extends VoidVisitorAdapter<Void> {
+        @Override
+        public void visit(ClassOrInterfaceDeclaration c, Void arg) {
+
+            System.out.println("class: " + c.getNameAsString());
+            c.getMethods().stream()
+                    .map(m -> c.getNameAsString() + "." + m.getNameAsString())
+                    .forEach(System.out::println);
+            //.count()
+            ;
+            super.visit(c, arg);
+        }
     }
 
     private static void printInfo(final String path) {
