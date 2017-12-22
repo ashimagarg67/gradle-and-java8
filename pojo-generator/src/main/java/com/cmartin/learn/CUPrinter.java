@@ -29,33 +29,43 @@ import static org.apache.commons.lang3.StringUtils.repeat;
  */
 public class CUPrinter {
 
-    public static final String SMC_PATH = "/Users/cmartin/projects/stash/customerbudgets/src/main/java";
+    public static final String BASE_PATH = "/home/PROFILE/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/";
     private static final String JAVA_EXTENDSION = ".java";
     private static final String DTO_SELECTOR = "dto";
     private static final String TOKEN_SEPARATOR = " : ";
 
 
     public static void main(String[] args) throws IOException {
-        final String SERVICE = "/Users/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/api/BankService.java";
+        final String SERVICE = BASE_PATH + "api/BankService.java";
         System.out.println("START: Javaparser");
         CompilationUnit cu = JavaParser.parse(new FileReader(SERVICE));
         new ClassVisitor().visit(cu, null);
         new MethodListVisitor().visit(cu, null);
 
-        Files.walk(Paths.get("/Users/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/"), FileVisitOption.FOLLOW_LINKS)
+        System.out.println("====> method list");
+        Stream<File> fileStream = Files.walk(Paths.get(BASE_PATH), FileVisitOption.FOLLOW_LINKS)
                 .map(x -> x.toFile())
-                .filter(File::isFile)
-                .forEach(System.out::println)
-        //.count()
+                .filter(File::isFile);
+        fileStream.map(File::getAbsolutePath)
+                .forEach(s -> printMethods(s))
         ;
         // System.out.println("file count: " + count);
 
-        Stream<File> fileStream = readAllDirectories("/Users/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/api/");
+        //Stream<File> fileStream = readAllDirectories(BASE_PATH);
         //fileStream.forEach(System.out::println);
 
         System.out.println("STOP: Javaparser");
     }
 
+    private static void printMethods(final String path) {
+        try {
+            CompilationUnit cu = JavaParser.parse(new FileReader(path));
+            new MethodListVisitor().visit(cu, null);
+            new FieldDeclarationVisitor().visit(cu, null);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main_(String[] args) throws IOException {
         System.out.println("-------------------> " + CUPrinter.class.getSimpleName());
@@ -87,9 +97,9 @@ public class CUPrinter {
         @Override
         public void visit(ClassOrInterfaceDeclaration c, Void arg) {
 
-            System.out.println("class: " + c.getNameAsString());
+            System.out.println("· class: " + c.getNameAsString());
             c.getMethods().stream()
-                    .map(m -> c.getNameAsString() + "." + m.getNameAsString())
+                    .map(m -> " ·· method: " + m.getNameAsString())
                     .forEach(System.out::println);
             //.count()
             ;
@@ -170,7 +180,10 @@ public class CUPrinter {
         @Override
         public void visit(FieldDeclaration fd, Void arg) {
             if (!fd.getModifiers().contains(Modifier.STATIC)) {
-                System.out.println(join("field: ", fd.getVariable(0).getNameAsString(), ", type: ", fd.getElementType()));
+                System.out.println(join("field: ", fd.getVariable(0).getNameAsString(),
+                        ", type: ", fd.getElementType(),
+                        ", scope:", fd.getModifiers().toString())
+                        );
             }
             super.visit(fd, arg);
         }
