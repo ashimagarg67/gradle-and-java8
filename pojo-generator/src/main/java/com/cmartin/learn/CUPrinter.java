@@ -29,7 +29,7 @@ import static org.apache.commons.lang3.StringUtils.repeat;
  */
 public class CUPrinter {
 
-    public static final String BASE_PATH = "/home/PROFILE/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/";
+    public static final String BASE_PATH = "/Users/cmartin/projects/github/gradle-and-java8/api/src/main/java/com/cmartin/learn/mybank/";
     private static final String JAVA_EXTENDSION = ".java";
     private static final String DTO_SELECTOR = "dto";
     private static final String TOKEN_SEPARATOR = " : ";
@@ -42,6 +42,7 @@ public class CUPrinter {
         new ClassVisitor().visit(cu, null);
         new MethodListVisitor().visit(cu, null);
 
+        /*
         System.out.println("====> method list");
         Stream<File> fileStream = Files.walk(Paths.get(BASE_PATH), FileVisitOption.FOLLOW_LINKS)
                 .map(x -> x.toFile())
@@ -49,6 +50,7 @@ public class CUPrinter {
         fileStream.map(File::getAbsolutePath)
                 .forEach(s -> printMethods(s))
         ;
+        */
         // System.out.println("file count: " + count);
 
         //Stream<File> fileStream = readAllDirectories(BASE_PATH);

@@ -19,6 +19,7 @@ public class ServiceBuilder {
 
     public ServiceBuilder addOperation(String name, String serviceRequest, String serviceResponse) {
         md.setName(name);
+        md.removeBody();
         md.setType(serviceResponse);
         md.addParameter(serviceRequest, WordUtils.uncapitalize(serviceRequest));
         return this;
