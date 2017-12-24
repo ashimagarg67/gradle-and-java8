@@ -1,0 +1,44 @@
+---
+# https://www.json2yaml.com/
+BankApplication:
+  description: full desc
+  services:
+  - AlphaService:
+    - A1Operation:
+        $ref: '#/dtos/A1Request'
+        $ref: '#/dtos/A1Response'
+    - A2Operation:
+        $ref: '#/dtos/A2Request'
+        $ref: '#/dtos/A2Response'
+  - BetaService:
+  dtos:
+    A1Request:
+      serializable: true
+      properties:
+      - req11Prop:
+          type: String
+          comments: req11Prop comments
+      - req12Prop:
+          type: BigDecimal
+          comments: req12Prop comments
+    A1Response:
+      serializable: true
+      properties:
+      - res11Prop:
+          type: Integer
+          comments: res11Prop comments
+      - res12Prop:
+          type: Date
+          comments: res12Prop comments
+    A2Request:
+      serializable: true
+      properties:
+      - req21Prop:
+          type: Boolean
+          comments: req21Prop comments
+    A2Response:
+      serializable: true
+      properties:
+      - res21Prop:
+          type: Double
+          comments: res21Prop comments
