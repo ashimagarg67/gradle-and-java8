@@ -84,6 +84,11 @@ public class DtoGenerator {
                 .addOperation("operation", "ServiceRequest", "ServiceResponse")
                 .build();
         System.out.println(srvCu);
+
+        System.out.println("START: ServiceImplBuilder");
+        CompilationUnit srvImplCu = new ServiceImplBuilder(srvCu)
+                .build();
+        System.out.println(srvImplCu);
     }
 
     private static ExpressionStmt newConsAssignStmt(final String propname) {
