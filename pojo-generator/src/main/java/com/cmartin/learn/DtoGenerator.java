@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class DtoGenerator {
-    private static final String PACKAGE_NAME = "com.cmartin.learn.dto";
+    private static final String PACKAGE_NAME = "com.cmartin.learn.service";
     private static final String CLASS_NAME = "AccountTransactionDto";
 
     private static final Class<BigDecimal> AMOUNT_PROP_TYPE = BigDecimal.class;
