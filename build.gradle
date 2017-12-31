@@ -50,7 +50,8 @@ subprojects {
                       commons_text    : 'org.apache.commons:commons-text:1.+',
                       jackson_core    : 'com.fasterxml.jackson.core:jackson-core:2.9.+',
                       jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.9.+',
-                      vavr            : "io.vavr:vavr:0.9.+"
+                      vavr            : "io.vavr:vavr:0.9.+",
+                      openpojo        : "com.openpojo:openpojo:0.8.+"
     ]
 
     dependencies {
@@ -80,7 +81,7 @@ subprojects {
     jacocoTestReport {
         reports {
             xml.enabled true
-            html.enabled false
+            html.enabled true
         }
     }
 
@@ -94,6 +95,8 @@ project(':api') {
         compile libraries.commons_lang3
         compile libraries.jackson_databind
         compile libraries.vavr
+
+        testCompile libraries.openpojo
     }
 }
 

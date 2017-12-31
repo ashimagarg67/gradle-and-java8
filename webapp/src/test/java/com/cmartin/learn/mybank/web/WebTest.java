@@ -1,12 +1,6 @@
 package com.cmartin.learn.mybank.web;
 
-import com.cmartin.learn.mybank.api.AccountDto;
-import com.cmartin.learn.mybank.api.AccountFilter;
-import com.cmartin.learn.mybank.api.AccountTransactionDto;
-import com.cmartin.learn.mybank.api.BankService;
-import com.cmartin.learn.mybank.api.ContractFilter;
-import com.cmartin.learn.mybank.api.UserDto;
-import com.cmartin.learn.mybank.api.UserFilter;
+import com.cmartin.learn.mybank.api.*;
 import com.cmartin.learn.mybank.test.TestUtils;
 import com.cmartin.learn.mybank.web.controller.BankController;
 import com.cmartin.learn.mybank.web.controller.FilterManager;
@@ -24,28 +18,19 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.cmartin.learn.mybank.test.TestUtils.COLLECTION_SIZE_1;
-import static com.cmartin.learn.mybank.test.TestUtils.COLLECTION_SIZE_5;
-import static com.cmartin.learn.mybank.test.TestUtils.DECIMAL_NUMBER_PATTERN;
-import static com.cmartin.learn.mybank.test.TestUtils.IBAN_PATTERN;
-import static com.cmartin.learn.mybank.test.TestUtils.UUID_PATTERN;
-import static com.cmartin.learn.mybank.test.TestUtils.WORD_PATTERN;
-import static com.cmartin.learn.mybank.test.TestUtils.makeBigDecimal;
-import static com.cmartin.learn.mybank.test.TestUtils.makePseudoIBANAccount;
-import static com.cmartin.learn.mybank.test.TestUtils.newAccountDto;
-import static com.cmartin.learn.mybank.test.TestUtils.newAccountTransactionDto;
-import static com.cmartin.learn.mybank.test.TestUtils.newUserDto;
+import static com.cmartin.learn.mybank.test.TestUtils.*;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.hamcrest.text.MatchesPattern.matchesPattern;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.startsWith;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 
@@ -230,6 +215,13 @@ public class WebTest {
                 .andExpect(jsonPath("$", hasSize(lessThanOrEqualTo(COLLECTION_SIZE_5))));
 
         verify(this.bankApi).getContracts(any(ContractFilter.class));
+    }
+
+    @Test
+    public void testGetRootContext() throws Exception {
+        this.mockMvc.perform(get("/"))
+                .andExpect(statusOk)
+                .andExpect(content().string(containsString(BankController.WELCOME_MESSAGE)));
     }
 
 }

@@ -24,6 +24,8 @@ import static org.apache.commons.lang3.StringUtils.join;
  */
 @RestController
 public class BankController {
+    public static final String WELCOME_MESSAGE = "Hello, this is 'gralde-and-java8' root context: ";
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -157,7 +159,7 @@ public class BankController {
     @GetMapping(value = "/")
     public ResponseEntity<String> getRootContext() {
         return new ResponseEntity<>(
-                join("Hello, this is 'gralde-and-java8' root context: ",
+                join(WELCOME_MESSAGE,
                         LocalDateTime.now().toString()),
                 HttpStatus.OK);
     }
