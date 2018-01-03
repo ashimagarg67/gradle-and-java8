@@ -22,31 +22,31 @@ import static com.cmartin.learn.PathConstants.JAVA_SRC_PATH;
 import static org.apache.commons.lang3.StringUtils.LF;
 import static org.apache.commons.lang3.StringUtils.join;
 
-public class InterfaceParser {
-    private static final String INTERFACE_NAME = "VehicleService";
+public class ClassParser {
+    private static final String CLASS_NAME = "VehicleServiceImpl";
+
     private static final String INTERFACE_PATHNAME =
-            JAVA_SRC_PATH.value() + JAVA_PKG_PATH.value() + INTERFACE_NAME + ".java";
+            JAVA_SRC_PATH.value() + JAVA_PKG_PATH.value() + CLASS_NAME + ".java";
 
     private final List<ImmutablePair<String, String>> lines = new ArrayList<>();
 
     public static void main(String[] args) {
-        InterfaceParser parser = new InterfaceParser();
-        System.out.println(join("START: ", InterfaceParser.class, LF));
+        ClassParser parser = new ClassParser();
+        System.out.println(join("START: ", ClassParser.class, LF));
         parser.printInterface(INTERFACE_PATHNAME);
-        System.out.println(join(LF, "STOP: ", InterfaceParser.class));
+        System.out.println(join(LF, "STOP: ", ClassParser.class));
     }
-
 
     public void printInterface(final String pathname) {
         CompilationUnit compilationUnit = this.parseInterface(pathname);
-        Optional<ClassOrInterfaceDeclaration> vehicleService =
-                compilationUnit.getInterfaceByName(INTERFACE_NAME);
-        ClassOrInterfaceDeclaration vi = vehicleService.orElseThrow(() -> new RuntimeException("No interface found"));
+        Optional<ClassOrInterfaceDeclaration> vehicleService = compilationUnit.getClassByName(CLASS_NAME);
+        ClassOrInterfaceDeclaration vi = vehicleService.orElseThrow(() -> new RuntimeException("No class found"));
 
-        this.addLine("interface name", vi.getNameAsString());
-        processMembers(vi.getMembers());
+        this.addLine("class name", vi.getNameAsString());
+        //processMembers(vi.getMembers());
 
         this.printUnit();
+
     }
 
     private CompilationUnit parseInterface(final String pathname) {
@@ -64,7 +64,7 @@ public class InterfaceParser {
     }
 
     private void processMembers(final NodeList<BodyDeclaration<?>> members) {
-        this.addLine("interface has member count", String.valueOf(members.size()));
+        this.addLine("class has member count", String.valueOf(members.size()));
         members.forEach(decl -> this.processMember(decl));
     }
 
