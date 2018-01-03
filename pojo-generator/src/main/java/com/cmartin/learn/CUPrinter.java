@@ -185,7 +185,7 @@ public class CUPrinter {
                 System.out.println(join("field: ", fd.getVariable(0).getNameAsString(),
                         ", type: ", fd.getElementType(),
                         ", scope:", fd.getModifiers().toString())
-                        );
+                );
             }
             super.visit(fd, arg);
         }

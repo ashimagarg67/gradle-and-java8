@@ -23,7 +23,7 @@ public class ServiceImplBuilder {
         if (interfaceUnit.getTypes().isNonEmpty()) {
             TypeDeclaration<?> interfaceType = interfaceUnit.getType(0);
             String interfaceName = interfaceType.getNameAsString();
-            ClassOrInterfaceDeclaration classDeclaration = cu.addClass( interfaceName+ "Impl");
+            ClassOrInterfaceDeclaration classDeclaration = cu.addClass(interfaceName + "Impl");
             classDeclaration.addImplementedType(interfaceName);
             MethodDeclaration methodDecl = interfaceType.getMethods().get(0); //TODO
             methodDecl.setModifiers(EnumSet.of(Modifier.PUBLIC));

@@ -80,7 +80,7 @@ public class DtoGenerator {
         System.out.println(cu2.toString());
 
         System.out.println("START: ServiceBuilder");
-        CompilationUnit srvCu = new ServiceBuilder(PACKAGE_NAME,"BankService")
+        CompilationUnit srvCu = new ServiceBuilder(PACKAGE_NAME, "BankService")
                 .addOperation("operation", "ServiceRequest", "ServiceResponse")
                 .build();
         System.out.println(srvCu);
