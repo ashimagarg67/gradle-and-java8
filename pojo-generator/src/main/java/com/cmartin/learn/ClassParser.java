@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.cmartin.learn.PathConstants.JAVA_PKG_PATH;
 import static com.cmartin.learn.PathConstants.JAVA_SRC_PATH;
@@ -44,6 +45,12 @@ public class ClassParser {
 
         this.addLine("class name", vi.getNameAsString());
         //processMembers(vi.getMembers());
+
+        vi.getMembers().stream()
+        .filter(BodyDeclaration::isFieldDeclaration).forEach(m -> System.out.println(m));
+        vi.getMembers().stream()
+        .filter(BodyDeclaration::isMethodDeclaration).forEach(m -> System.out.println(m));
+
 
         this.printUnit();
 
