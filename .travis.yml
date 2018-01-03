@@ -2,8 +2,11 @@ language: java
 jdk:
   - oraclejdk8
 script:
-  - ./gradlew build 
+  - ./gradlew build
   - ./gradlew jacocoTestReport
+  - cd pojo-generator
+  - ./gradlew build
+  
 after_success:
   - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py)
   - bash <(curl -s https://codecov.io/bash) -t 21540837-522f-4d27-918d-6dfd7ea66992
