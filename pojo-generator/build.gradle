@@ -8,7 +8,7 @@ repositories {
 sourceCompatibility = 1.8
 version = 1.0
 
-mainClassName = 'com.cmartin.learn.DtoGenerator'
+mainClassName = 'com.cmartin.learn.DtoParser'
 
 dependencies {
     compile 'com.github.javaparser:javaparser-core:3.5.+',
