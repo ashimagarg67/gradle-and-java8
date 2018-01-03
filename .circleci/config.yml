@@ -38,8 +38,13 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
-      - run: ./gradlew build
+      # build projects
+      - run:
+          name: build projects
+          command: |
+                   ./gradlew build
+                   cd pojo-generator
+                   ./gradlew build
 
 #  test:
 #      post:
