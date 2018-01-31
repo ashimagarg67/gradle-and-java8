@@ -23,6 +23,7 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'announce'
     apply plugin: 'net.saliman.cobertura'
+    apply plugin: 'groovy'
 
     group = 'com.cmartin.learn'
     version = '1.0.1-SNAPSHOT'
@@ -120,12 +121,17 @@ project(':service') {
         compile project(':api')
         compile project(':repository')
         compile project(':shared')
-        testCompile project(':test-utils')
 
+        compile 'org.codehaus.groovy:groovy-all:2.4.13'
+        compile 'org.spockframework:spock-core:1.1-groovy-2.4'
         compile libraries.commons_lang3
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
         compile group: 'org.springframework', name: 'spring-context', version: '5.+'
         compile group: 'io.vavr', name: 'vavr', version: '0.9.+'
+
+        testCompile project(':test-utils')
+        testCompile 'org.codehaus.groovy:groovy-all:2.4.13'
+
     }
 }
 
