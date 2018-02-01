@@ -27,7 +27,7 @@ class CalculatorServiceSpecification extends Specification {
         Try result = calculator.subtract(BigDecimal.valueOf(5), BigDecimal.valueOf(3))
 
         result.isSuccess() == true
-        result.get() == TWO
+        result.get() == TWO 
     }
 
     def "Multiply two numbers"() {

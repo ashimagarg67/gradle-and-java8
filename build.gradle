@@ -133,6 +133,7 @@ project(':service') {
         testCompile 'org.codehaus.groovy:groovy-all:2.4.13'
 
     }
+
 }
 
 project(':webapp') {
@@ -211,3 +212,4 @@ class BuildNumberGeneratorTask extends DefaultTask {
         file.write(number.toString())
     }
 }
+

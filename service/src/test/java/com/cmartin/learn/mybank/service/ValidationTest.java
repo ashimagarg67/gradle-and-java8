@@ -47,7 +47,7 @@ public class ValidationTest {
         AccountDto accountDto = TestUtils.newAccountDto(null, "", "", null);
         Validation<Seq<String>, AccountDto> result = accountDtoValidator.validateAccountDto(accountDto);
 
-        Assert.assertTrue(result.isInvalid());
+        Assert.assertTrue(result.isInvalid());   
     }
 
 }
