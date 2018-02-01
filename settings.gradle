@@ -1,1 +1,7 @@
-include 'api', 'domain', 'repository', 'service', 'shared', 'test-utils', 'webapp'
+include 'api'
+include 'domain'
+include 'repository'
+include 'service'
+include 'shared'
+include 'test-utils'
+include 'webapp'
