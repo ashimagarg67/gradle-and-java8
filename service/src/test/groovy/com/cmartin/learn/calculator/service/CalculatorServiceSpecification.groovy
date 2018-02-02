@@ -12,12 +12,13 @@ class CalculatorServiceSpecification extends Specification {
         def calculator = new CalculatorServiceImpl()
 
         expect:
+        calculator.sum(BigDecimal.valueOf(a), BigDecimal.valueOf(b)).isSuccess()
         calculator.sum(BigDecimal.valueOf(a), BigDecimal.valueOf(b)).get() == r
 
         where:
-        a | b | r
-        2 | 3 | 5
-        1 | 0 | 1
+        a  | b | r
+        2  | 3 | 5
+        1  | 0 | 1
         -2 | 3 | 1
     }
 
@@ -28,7 +29,7 @@ class CalculatorServiceSpecification extends Specification {
         then: "2 plus 3 is 5"
         Try result = calculator.sum(BigDecimal.valueOf(2), BigDecimal.valueOf(3))
 
-        result.isSuccess() == true
+        result.isSuccess()
         result.get() == FIVE
     }
 
@@ -40,7 +41,7 @@ class CalculatorServiceSpecification extends Specification {
         Try result = calculator.subtract(BigDecimal.valueOf(5), BigDecimal.valueOf(3))
 
         result.isSuccess() == true
-        result.get() == TWO 
+        result.get() == TWO
     }
 
     def "Multiply two numbers"() {
@@ -50,7 +51,7 @@ class CalculatorServiceSpecification extends Specification {
         then: "4 multiply 4 is 16"
         Try result = calculator.multiply(BigDecimal.valueOf(4), BigDecimal.valueOf(4))
 
-        result.isSuccess() == true
+        result.isSuccess()
         result.get() == SIXTEEN
     }
 
@@ -61,7 +62,7 @@ class CalculatorServiceSpecification extends Specification {
         then: "5 divide by 2 is 2.5"
         Try result = calculator.divide(BigDecimal.valueOf(5), BigDecimal.valueOf(2))
 
-        result.isSuccess() == true
+        result.isSuccess()
         result.get() == BigDecimal.valueOf(2.5)
     }
 
@@ -72,7 +73,7 @@ class CalculatorServiceSpecification extends Specification {
         then: "1 divide by 0 is an error"
         Try result = calculator.divide(BigDecimal.valueOf(1), BigDecimal.valueOf(0))
 
-        result.isFailure() == true
+        result.isFailure()
         result.getCause().getClass() == ArithmeticException.class
         result.getCause().getMessage().contains("Division by zero")
     }
