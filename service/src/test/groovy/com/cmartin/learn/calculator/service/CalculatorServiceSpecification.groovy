@@ -1,6 +1,7 @@
 import com.cmartin.learn.calculator.service.CalculatorServiceImpl
 import io.vavr.control.Try
-import spock.lang.Specification;
+import spock.lang.Specification
+import spock.lang.Subject;
 
 class CalculatorServiceSpecification extends Specification {
 
@@ -8,12 +9,20 @@ class CalculatorServiceSpecification extends Specification {
     BigDecimal TWO = BigDecimal.valueOf(2)
     BigDecimal SIXTEEN = BigDecimal.valueOf(16)
 
+    @Subject
+            calculator
+
+    def setup() {
+        calculator = new CalculatorServiceImpl()
+    }
+
     def "Add two numbers matrix"(BigDecimal a, BigDecimal b, BigDecimal r) {
-        def calculator = new CalculatorServiceImpl()
+        given: "a new calculator is created"
 
         expect:
-        calculator.sum(BigDecimal.valueOf(a), BigDecimal.valueOf(b)).isSuccess()
-        calculator.sum(BigDecimal.valueOf(a), BigDecimal.valueOf(b)).get() == r
+        Try result = calculator.sum(BigDecimal.valueOf(a), BigDecimal.valueOf(b))
+        result.isSuccess()
+        result.get() == r
 
         where:
         a  | b | r
@@ -23,58 +32,68 @@ class CalculatorServiceSpecification extends Specification {
     }
 
     def "Add two numbers"() {
-        when: "a new calculator is created"
-        def calculator = new CalculatorServiceImpl()
+        given: "a new calculator is created"
 
-        then: "2 plus 3 is 5"
+        when: "2 plus 3 is 5"
         Try result = calculator.sum(BigDecimal.valueOf(2), BigDecimal.valueOf(3))
 
-        result.isSuccess()
-        result.get() == FIVE
+        then:
+        with(result) {
+            isSuccess()
+            get() == FIVE
+        }
     }
 
     def "Subtract two numbers"() {
-        when: "a new calculator is created"
-        def calculator = new CalculatorServiceImpl()
+        given: "a new calculator is created"
 
-        then: "5 minus 3 is 2"
+        when: "5 minus 3 is 2"
         Try result = calculator.subtract(BigDecimal.valueOf(5), BigDecimal.valueOf(3))
 
-        result.isSuccess() == true
-        result.get() == TWO
+        then:
+        with(result) {
+            isSuccess()
+            get() == TWO
+        }
     }
 
     def "Multiply two numbers"() {
-        when: "a new calculator is created"
-        def calculator = new CalculatorServiceImpl()
+        given: "a new calculator is created"
 
-        then: "4 multiply 4 is 16"
+        when: "4 multiply 4 is 16"
         Try result = calculator.multiply(BigDecimal.valueOf(4), BigDecimal.valueOf(4))
 
-        result.isSuccess()
-        result.get() == SIXTEEN
+        then:
+        with(result) {
+            isSuccess()
+            get() == SIXTEEN
+        }
     }
 
     def "Divide two numbers"() {
-        when: "a new calculator is created"
-        def calculator = new CalculatorServiceImpl()
+        given: "a new calculator is created"
 
-        then: "5 divide by 2 is 2.5"
+        when: "5 divide by 2 is 2.5"
         Try result = calculator.divide(BigDecimal.valueOf(5), BigDecimal.valueOf(2))
 
-        result.isSuccess()
-        result.get() == BigDecimal.valueOf(2.5)
+        then:
+        with(result) {
+            isSuccess()
+            get() == BigDecimal.valueOf(2.5)
+        }
     }
 
     def "Divide by zero"() {
-        when: "a new calculator is created"
-        def calculator = new CalculatorServiceImpl()
+        given: "a new calculator is created"
 
-        then: "1 divide by 0 is an error"
+        when: "1 divide by 0 is an error"
         Try result = calculator.divide(BigDecimal.valueOf(1), BigDecimal.valueOf(0))
 
-        result.isFailure()
-        result.getCause().getClass() == ArithmeticException.class
-        result.getCause().getMessage().contains("Division by zero")
+        then:
+        with(result) {
+            isFailure()
+            getCause() instanceof ArithmeticException
+            getCause().getMessage().contains("Division by zero")
+        }
     }
 }
