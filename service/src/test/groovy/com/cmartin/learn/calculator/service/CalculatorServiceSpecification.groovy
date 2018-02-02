@@ -8,6 +8,19 @@ class CalculatorServiceSpecification extends Specification {
     BigDecimal TWO = BigDecimal.valueOf(2)
     BigDecimal SIXTEEN = BigDecimal.valueOf(16)
 
+    def "Add two numbers matrix"(BigDecimal a, BigDecimal b, BigDecimal r) {
+        def calculator = new CalculatorServiceImpl()
+
+        expect:
+        calculator.sum(BigDecimal.valueOf(a), BigDecimal.valueOf(b)).get() == r
+
+        where:
+        a | b | r
+        2 | 3 | 5
+        1 | 0 | 1
+        -2 | 3 | 1
+    }
+
     def "Add two numbers"() {
         when: "a new calculator is created"
         def calculator = new CalculatorServiceImpl()
