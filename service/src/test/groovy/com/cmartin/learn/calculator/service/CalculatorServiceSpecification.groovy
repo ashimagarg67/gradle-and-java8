@@ -1,7 +1,8 @@
 import com.cmartin.learn.calculator.service.CalculatorServiceImpl
 import io.vavr.control.Try
 import spock.lang.Specification
-import spock.lang.Subject;
+import spock.lang.Subject
+import spock.lang.Unroll;
 
 class CalculatorServiceSpecification extends Specification {
 
@@ -16,6 +17,7 @@ class CalculatorServiceSpecification extends Specification {
         calculator = new CalculatorServiceImpl()
     }
 
+    @Unroll
     def "Add two numbers matrix"(BigDecimal a, BigDecimal b, BigDecimal r) {
         given: "a new calculator is created"
 
