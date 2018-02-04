@@ -24,7 +24,7 @@ import static org.apache.commons.lang3.StringUtils.join;
  */
 @RestController
 public class BankController {
-    public static final String WELCOME_MESSAGE = "Hello, this is 'gralde-and-java8' root context: ";
+    public static final String WELCOME_MESSAGE = "Hello, this is 'gradle-and-java8' root context: ";
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
