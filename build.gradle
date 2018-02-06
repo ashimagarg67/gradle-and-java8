@@ -49,6 +49,7 @@ subprojects {
     ext.libraries = [ // Groovy map literal
                       commons_lang3   : 'org.apache.commons:commons-lang3:3.+',
                       commons_text    : 'org.apache.commons:commons-text:1.+',
+                      slf4j_api       : 'org.slf4j:slf4j-api:1.7.+',
                       groovy_all      : 'org.codehaus.groovy:groovy-all:2.4.13',
                       jackson_core    : 'com.fasterxml.jackson.core:jackson-core:2.9.+',
                       jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.9.+',
@@ -128,7 +129,7 @@ project(':service') {
         compile libraries.groovy_all
         compile libraries.spock_core
         compile libraries.commons_lang3
-        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+        compile libraries.slf4j_api
         compile group: 'org.springframework', name: 'spring-context', version: '5.+'
         compile group: 'io.vavr', name: 'vavr', version: '0.9.+'
 
@@ -144,7 +145,7 @@ project(':webapp') {
     apply plugin: 'org.akhikhl.gretty'
 
     dependencies {
-        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+        compile libraries.slf4j_api
         compile project(':api')
         compile project(':domain')
         compile project(':shared')
