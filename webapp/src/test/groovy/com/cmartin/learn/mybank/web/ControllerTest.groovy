@@ -8,7 +8,6 @@ import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.ResultMatcher
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -16,23 +15,23 @@ import static com.cmartin.learn.mybank.test.TestUtils.*
 import static org.hamcrest.Matchers.hasSize
 import static org.hamcrest.Matchers.lessThanOrEqualTo
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
 
 class ControllerTest extends Specification {
 
-    def ResultMatcher statusOk = status().isOk()
-    def ResultMatcher contentTypeJson = content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+    def statusOk = status().isOk()
+    def contentTypeJson = content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
     def MockMvc mockMvc
-    def MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter()
+    def converter = new MappingJackson2HttpMessageConverter()
 
     @Subject
     BankController bankController
 
-    def BankService bankService = Stub()
-    def FilterManager filterManager = Mock()
-    def UUID accountId = UUID.randomUUID()
+    def bankService = Stub(BankService)
+    def filterManager = Mock(FilterManager)
 
     def setup() {
         bankController = new BankController(bankService)
@@ -43,8 +42,12 @@ class ControllerTest extends Specification {
                 .build()
     }
 
+
     def "get account"() {
         given: "an account identifier"
+        def UUID accountId = UUID.randomUUID()
+
+        and:
         bankService.getAccount(_) >> Optional.of(TestUtils.newAccountDto(
                 accountId, "account-alias", makePseudoIBANAccount(), makeBigDecimal(100d)))
 
@@ -78,5 +81,24 @@ class ControllerTest extends Specification {
         }
 
         1 * filterManager.buildAccoutFilter()
+    }
+
+    def "create account"() {
+        given:
+        def UUID accountId = UUID.randomUUID()
+        def accountJson = TestUtils.objectToJson(TestUtils.newAccountDto(
+                accountId, "account-alias", makePseudoIBANAccount(), makeBigDecimal(100d)))
+
+        when:
+        ResultActions result = mockMvc.perform(post("/accounts")
+                .content(accountJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+
+        then:
+        with(result) {
+            result.andExpect(status().isCreated())
+        }
+
     }
 }

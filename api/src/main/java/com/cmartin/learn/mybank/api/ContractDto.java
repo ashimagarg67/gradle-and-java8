@@ -1,7 +1,6 @@
 package com.cmartin.learn.mybank.api;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -11,11 +10,14 @@ import java.util.UUID;
  */
 public class ContractDto implements Serializable {
     private UUID id;
-    private String alias="";
+    private String alias = "";
+
+    public ContractDto() {
+    }
 
     public ContractDto(UUID id, String alias) {
         this.id = id;
-        this.alias=alias;
+        this.alias = alias;
     }
 
     public UUID getId() {

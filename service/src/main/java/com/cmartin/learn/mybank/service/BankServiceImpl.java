@@ -1,16 +1,7 @@
 package com.cmartin.learn.mybank.service;
 
 import com.cmartin.learn.mybank.BankRepository;
-import com.cmartin.learn.mybank.api.AccountDto;
-import com.cmartin.learn.mybank.api.AccountFilter;
-import com.cmartin.learn.mybank.api.AccountTransactionDto;
-import com.cmartin.learn.mybank.api.BankService;
-import com.cmartin.learn.mybank.api.ContractDto;
-import com.cmartin.learn.mybank.api.ContractFilter;
-import com.cmartin.learn.mybank.api.OperationInputDto;
-import com.cmartin.learn.mybank.api.OperationOutputDto;
-import com.cmartin.learn.mybank.api.UserDto;
-import com.cmartin.learn.mybank.api.UserFilter;
+import com.cmartin.learn.mybank.api.*;
 import io.vavr.control.Try;
 import org.springframework.stereotype.Service;
 

@@ -1,13 +1,13 @@
 package com.cmartin.learn.mybank.test;
 
-import com.cmartin.learn.mybank.api.AccountDto;
-import com.cmartin.learn.mybank.api.AccountListDto;
-import com.cmartin.learn.mybank.api.AccountTransactionDto;
-import com.cmartin.learn.mybank.api.ContractDto;
-import com.cmartin.learn.mybank.api.UserDto;
+import com.cmartin.learn.mybank.api.*;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.text.RandomStringGenerator;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.mock.http.MockHttpOutputMessage;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -113,6 +113,13 @@ public class TestUtils {
                         makeBigDecimal(RandomUtils.nextDouble(0, 100)),
                         LocalDateTime.now()))
                 .collect(Collectors.toList());
+    }
+
+    public static String objectToJson(Object o) throws IOException {
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
+        converter.write(o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
+        return mockHttpOutputMessage.getBodyAsString();
     }
 
     private static String buildCapitalString(final Integer length) {

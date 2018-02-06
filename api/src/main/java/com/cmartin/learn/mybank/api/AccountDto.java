@@ -15,6 +15,8 @@ public class AccountDto extends ContractDto {
     @JsonSerialize(using = ToStringSerializer.class)
     private BigDecimal balance;
 
+    public AccountDto() {
+    }
 
     public AccountDto(UUID id, String alias, String number, BigDecimal balance) {
         super(id, alias);
@@ -23,7 +25,6 @@ public class AccountDto extends ContractDto {
     }
 
     /**
-     *
      * @return
      */
     public BigDecimal getBalance() {
@@ -31,7 +32,6 @@ public class AccountDto extends ContractDto {
     }
 
     /**
-     *
      * @return
      */
     public String getNumber() {

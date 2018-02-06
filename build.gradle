@@ -177,6 +177,8 @@ project(':test-utils') {
     dependencies {
         compile project(':api')
         compile libraries.commons_text
+        compile group: 'org.springframework', name: 'spring-webmvc', version: '5.+'
+        compile group: 'org.springframework', name: 'spring-test', version: '5.+'
     }
 }
 
