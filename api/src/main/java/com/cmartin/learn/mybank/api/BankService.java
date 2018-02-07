@@ -49,6 +49,11 @@ public interface BankService {
     Optional<AccountDto> getAccount(UUID accountId);
 
     /**
+     * @param accountDto
+     */
+    Try<AccountDto> createAccount(AccountDto accountDto);
+
+    /**
      * @param accountId
      * @return
      */

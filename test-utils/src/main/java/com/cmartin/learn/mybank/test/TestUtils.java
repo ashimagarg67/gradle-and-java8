@@ -87,6 +87,10 @@ public class TestUtils {
         return dto;
     }
 
+    public static AccountDto newAccountDto(final String alias, final String number, final BigDecimal balance) {
+        return newAccountDto(null, alias, number, balance);
+    }
+
     public static AccountTransactionDto newAccountTransactionDto(
             final UUID id, final BigDecimal amount, final LocalDateTime dateTime) {
         AccountTransactionDto dto = new AccountTransactionDto(id, amount, dateTime);

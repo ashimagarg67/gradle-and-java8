@@ -1,6 +1,7 @@
 package com.cmartin.learn.mybank.web.controller;
 
 import com.cmartin.learn.mybank.api.*;
+import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,7 +167,15 @@ public class BankController {
         //TODO
         this.logger.debug("input: {}", accountDto);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        final Try<AccountDto> account = this.bankService.createAccount(accountDto);
+
+        this.logger.debug("output: {}", account);
+
+        if (account.isSuccess()) {
+            return new ResponseEntity<>(account.get(), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     public void setFilterManager(FilterManager filterManager) {

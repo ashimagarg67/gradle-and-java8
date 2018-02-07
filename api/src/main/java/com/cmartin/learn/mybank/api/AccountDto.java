@@ -43,6 +43,8 @@ public class AccountDto extends ContractDto {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("id", super.getId())
+                .append("alias", super.getAlias())
                 .append("number", number)
                 .append("balance", balance)
                 .toString();

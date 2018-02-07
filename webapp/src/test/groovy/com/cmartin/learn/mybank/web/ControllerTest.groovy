@@ -1,9 +1,11 @@
 package com.cmartin.learn.mybank.web
 
 import com.cmartin.learn.mybank.api.BankService
+import com.cmartin.learn.mybank.api.ServiceException
 import com.cmartin.learn.mybank.test.TestUtils
 import com.cmartin.learn.mybank.web.controller.BankController
 import com.cmartin.learn.mybank.web.controller.FilterManager
+import io.vavr.control.Try
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
@@ -27,6 +29,8 @@ class ControllerTest extends Specification {
     def MockMvc mockMvc
     def converter = new MappingJackson2HttpMessageConverter()
 
+    def accountId = UUID.randomUUID()
+
     @Subject
     BankController bankController
 
@@ -45,9 +49,6 @@ class ControllerTest extends Specification {
 
     def "get account"() {
         given: "an account identifier"
-        def UUID accountId = UUID.randomUUID()
-
-        and:
         bankService.getAccount(_) >> Optional.of(TestUtils.newAccountDto(
                 accountId, "account-alias", makePseudoIBANAccount(), makeBigDecimal(100d)))
 
@@ -83,14 +84,19 @@ class ControllerTest extends Specification {
         1 * filterManager.buildAccoutFilter()
     }
 
-    def "create account"() {
+    def "create account 'created"() {
         given:
-        def UUID accountId = UUID.randomUUID()
-        def accountJson = TestUtils.objectToJson(TestUtils.newAccountDto(
-                accountId, "account-alias", makePseudoIBANAccount(), makeBigDecimal(100d)))
+        def accountDto = TestUtils.newAccountDto(accountId, "account-alias", makePseudoIBANAccount(), makeBigDecimal(100d))
+
+        and:
+        def accountJson = TestUtils.objectToJson(
+                TestUtils.newAccountDto("account-alias", makePseudoIBANAccount(), makeBigDecimal(100d)))
+
+        and:
+        bankService.createAccount(_) >> Try.success(accountDto)
 
         when:
-        ResultActions result = mockMvc.perform(post("/accounts")
+        def result = mockMvc.perform(post("/accounts")
                 .content(accountJson)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
@@ -99,6 +105,25 @@ class ControllerTest extends Specification {
         with(result) {
             result.andExpect(status().isCreated())
         }
+    }
 
+    def "create account 'conflict'"() {
+        given:
+        def accountJson = TestUtils.objectToJson(
+                TestUtils.newAccountDto("account-alias", makePseudoIBANAccount(), makeBigDecimal(100d)))
+
+        and:
+        bankService.createAccount(_) >> Try.failure(new ServiceException("the account already exists"))
+
+        when:
+        def result = mockMvc.perform(post("/accounts")
+                .content(accountJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+
+        then:
+        with(result) {
+            result.andExpect(status().isConflict())
+        }
     }
 }

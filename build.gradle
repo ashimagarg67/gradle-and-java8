@@ -38,7 +38,6 @@ subprojects {
 
 
     configurations.all {
-        //compile.exclude group: 'org.springframework', name: 'spring-context', version: '4.2.6.RELEASE'
         resolutionStrategy {
             // fail eagerly on version conflict (includes transitive dependencies)
             // e.g. multiple different versions of the same dependency (group and name are equal)
@@ -130,8 +129,8 @@ project(':service') {
         compile libraries.spock_core
         compile libraries.commons_lang3
         compile libraries.slf4j_api
-        compile group: 'org.springframework', name: 'spring-context', version: '5.+'
-        compile group: 'io.vavr', name: 'vavr', version: '0.9.+'
+        compile 'org.springframework:spring-context:5.0.+'
+        compile libraries.vavr
 
         testCompile project(':test-utils')
 
@@ -150,12 +149,12 @@ project(':webapp') {
         compile project(':domain')
         compile project(':shared')
         compile project(':service')
-        compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-        compile group: 'org.springframework', name: 'spring-webmvc', version: '5.+'
+        compile 'javax.servlet:javax.servlet-api:3.1.0'
+        compile 'org.springframework:spring-webmvc:5.0.+'
 //        compile project(':repository')
 
         testCompile project(':test-utils')
-        testCompile group: 'org.springframework', name: 'spring-test', version: '5.+'
+        testCompile 'org.springframework:spring-test:5.0.+'
     }
 
     task increaseBuildVersion(type: BuildNumberGeneratorTask) {
@@ -178,8 +177,8 @@ project(':test-utils') {
     dependencies {
         compile project(':api')
         compile libraries.commons_text
-        compile group: 'org.springframework', name: 'spring-webmvc', version: '5.+'
-        compile group: 'org.springframework', name: 'spring-test', version: '5.+'
+        compile 'org.springframework:spring-webmvc:5.0.+'
+        compile 'org.springframework:spring-test:5.0.+'
     }
 }
 
