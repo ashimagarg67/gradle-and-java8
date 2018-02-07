@@ -12,6 +12,6 @@ public class ServiceConfig {
 
     @Bean
     public BankService bankServiceImpl() {
-        return new BankServiceImpl();
+        return new BankServiceImpl(null);
     }
 }

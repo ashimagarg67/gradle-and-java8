@@ -164,6 +164,8 @@ public class BankController {
     @PostMapping(value = "/accounts")
     public ResponseEntity<?> createAccount(@RequestBody final AccountDto accountDto) {
         //TODO
+        this.logger.debug("input: {}", accountDto);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

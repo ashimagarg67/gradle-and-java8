@@ -19,6 +19,10 @@ public class BankServiceImpl implements BankService {
     // TODO @Autowired
     private BankRepository bankRepository;
 
+    public BankServiceImpl(final BankRepository bankRepository){
+        this.bankRepository=bankRepository;
+    }
+
     @Override
     public Try<OperationOutputDto> operation(final OperationInputDto operationInputDto) {
         return Try.success(new OperationOutputDto("dummyProperty"));

@@ -2,6 +2,8 @@ package com.cmartin.learn.mybank.api;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -36,5 +38,13 @@ public class AccountDto extends ContractDto {
      */
     public String getNumber() {
         return number;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("number", number)
+                .append("balance", balance)
+                .toString();
     }
 }
