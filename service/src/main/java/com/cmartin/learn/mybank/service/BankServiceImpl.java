@@ -71,6 +71,11 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    public Try<UUID> deleteAccount(final UUID accountId) {
+        return Try.success(accountId);
+    }
+
+    @Override
     public List<AccountTransactionDto> getAccountTransactions(UUID accountId) {
         return new ArrayList<>();
     }

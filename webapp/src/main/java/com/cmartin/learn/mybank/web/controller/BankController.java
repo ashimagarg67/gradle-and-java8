@@ -39,7 +39,7 @@ public class BankController {
 
     @GetMapping(value = "/accounts/{accountId}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AccountDto> getAccount(@PathVariable String accountId) {
+    public ResponseEntity<AccountDto> getAccount(@PathVariable final String accountId) {
 
         this.logger.debug("input: accountId={}", accountId);
 
@@ -52,7 +52,7 @@ public class BankController {
 
     @GetMapping(value = "/accounts/{accountId}/transactions",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<AccountTransactionDto>> getAccountTransactions(@PathVariable String accountId) {
+    public ResponseEntity<List<AccountTransactionDto>> getAccountTransactions(@PathVariable final String accountId) {
 
         this.logger.debug("input: accountId={}", accountId);
 
@@ -67,7 +67,7 @@ public class BankController {
     @GetMapping(value = "/accounts/{accountId}/transactions/{transactionId}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AccountTransactionDto> getAccountTransaction(
-            @PathVariable String accountId, @PathVariable String transactionId) {
+            @PathVariable final String accountId, @PathVariable final String transactionId) {
 
         this.logger.debug("input: accountId={}, transactionId={}", accountId, transactionId);
 
@@ -97,7 +97,7 @@ public class BankController {
 
     @GetMapping(value = "/users/{userId}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
+    public ResponseEntity<UserDto> getUser(@PathVariable final String userId) {
 
         this.logger.debug("input: userId={}", userId);
 
@@ -126,7 +126,7 @@ public class BankController {
 
     @GetMapping(value = "/accounts/{accountId}/users",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<UserDto>> getAccountUsers(@PathVariable String accountId) {
+    public ResponseEntity<List<UserDto>> getAccountUsers(@PathVariable final String accountId) {
 
         this.logger.debug("input: accountId={}", accountId);
 
@@ -176,6 +176,23 @@ public class BankController {
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+
+    @DeleteMapping(value = "/accounts/{accountId}")
+    public ResponseEntity<?> deleteAccount(@PathVariable final String accountId) {
+        this.logger.debug("input: id={}", accountId);
+
+        final Try<UUID> id = this.bankService.deleteAccount(UUID.fromString(accountId));
+
+        this.logger.debug("output: id={}", id);
+
+        if (id.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
     public void setFilterManager(FilterManager filterManager) {

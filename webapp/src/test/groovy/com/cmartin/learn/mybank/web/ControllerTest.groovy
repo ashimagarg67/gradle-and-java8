@@ -16,8 +16,7 @@ import spock.lang.Subject
 import static com.cmartin.learn.mybank.test.TestUtils.*
 import static org.hamcrest.Matchers.hasSize
 import static org.hamcrest.Matchers.lessThanOrEqualTo
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
@@ -25,6 +24,11 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 class ControllerTest extends Specification {
 
     def statusOk = status().isOk()
+    def statusCreated = status().isCreated()
+    def statusNoContent = status().isNoContent()
+    def statusNotFound = status().isNotFound()
+    def statusConflict = status().isConflict()
+
     def contentTypeJson = content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
     def MockMvc mockMvc
     def converter = new MappingJackson2HttpMessageConverter()
@@ -103,7 +107,7 @@ class ControllerTest extends Specification {
 
         then:
         with(result) {
-            result.andExpect(status().isCreated())
+            result.andExpect(statusCreated)
         }
     }
 
@@ -123,7 +127,35 @@ class ControllerTest extends Specification {
 
         then:
         with(result) {
-            result.andExpect(status().isConflict())
+            result.andExpect(statusConflict)
+        }
+    }
+
+    def "delete account 'no content"() {
+        given:
+        bankService.deleteAccount(_) >> Try.success(accountId)
+
+        when:
+        def result = mockMvc.perform(delete("/accounts/{accountId}", accountId))
+                .andDo(print())
+
+        then:
+        with(result) {
+            result.andExpect(statusNoContent)
+        }
+    }
+
+    def "delete account 'not found"() {
+        given:
+        bankService.deleteAccount(_) >> Try.failure(new ServiceException("the account does not exist"))
+
+        when:
+        def result = mockMvc.perform(delete("/accounts/{accountId}", accountId))
+                .andDo(print())
+
+        then:
+        with(result) {
+            result.andExpect(statusNotFound)
         }
     }
 }

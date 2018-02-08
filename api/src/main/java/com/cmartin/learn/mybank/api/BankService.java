@@ -53,6 +53,9 @@ public interface BankService {
      */
     Try<AccountDto> createAccount(AccountDto accountDto);
 
+
+    Try<UUID> deleteAccount(UUID accountId);
+
     /**
      * @param accountId
      * @return
