@@ -178,8 +178,28 @@ public class BankController {
         }
     }
 
+    @PutMapping(value = "/accounts/{id}")
+    public ResponseEntity<?> updateAcconut(@PathVariable final String id, @RequestBody final AccountDto accountDto) {
+        this.logger.debug("input: id={}, {}", id, accountDto);
+
+        final Try<UUID> idTry = this.bankService.findAccountById(UUID.fromString(id));
+
+        if (idTry.isSuccess()) {
+            final Try<AccountDto> updatedAccount = this.bankService.updateAccount(accountDto);
+            if (updatedAccount.isSuccess()) {
+                this.logger.debug("output: {}", updatedAccount);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
     @DeleteMapping(value = "/accounts/{accountId}")
-    public ResponseEntity<?> deleteAccount(@PathVariable final String accountId) {
+    public ResponseEntity<?> deleteAccount(@PathVariable final String accountId, @RequestBody final AccountDto accountDto) {
         this.logger.debug("input: id={}", accountId);
 
         final Try<UUID> id = this.bankService.deleteAccount(UUID.fromString(accountId));
@@ -191,9 +211,8 @@ public class BankController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-
     }
+
 
     public void setFilterManager(FilterManager filterManager) {
         this.filterManager = filterManager;

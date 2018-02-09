@@ -49,12 +49,27 @@ public interface BankService {
     Optional<AccountDto> getAccount(UUID accountId);
 
     /**
+     * @param id
+     * @return
+     */
+    Try<UUID> findAccountById(UUID id);
+
+    /**
      * @param accountDto
      */
     Try<AccountDto> createAccount(AccountDto accountDto);
 
+    /**
+     * @param accountDto
+     */
+    Try<AccountDto> updateAccount(AccountDto accountDto);
 
+    /**
+     * @param accountId
+     * @return
+     */
     Try<UUID> deleteAccount(UUID accountId);
+
 
     /**
      * @param accountId

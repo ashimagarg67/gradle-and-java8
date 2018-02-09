@@ -131,6 +131,31 @@ class ControllerTest extends Specification {
         }
     }
 
+    def "update account 'no content"() {
+        given:
+        def accountDto = TestUtils.newAccountDto(accountId, "account-alias", makePseudoIBANAccount(), makeBigDecimal(300d))
+
+        and:
+        def accountJson = TestUtils.objectToJson(accountDto)
+
+        and:
+        bankService.findAccountById(_) >> Try.success(accountId)
+
+        and:
+        bankService.updateAccount(_) >> Try.success(accountId)
+
+        when:
+        def result = mockMvc.perform(put("/accounts/{account}", accountId)
+                .content(accountJson)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+
+        then:
+        with(result) {
+            result.andExpect(statusNoContent)
+        }
+    }
+
     def "delete account 'no content"() {
         given:
         bankService.deleteAccount(_) >> Try.success(accountId)
@@ -158,4 +183,6 @@ class ControllerTest extends Specification {
             result.andExpect(statusNotFound)
         }
     }
+
+
 }

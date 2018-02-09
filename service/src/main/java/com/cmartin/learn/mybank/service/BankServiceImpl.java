@@ -62,7 +62,12 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Try<AccountDto> createAccount(AccountDto accountDto) {
+    public Try<UUID> findAccountById(final UUID id) {
+        return Try.success(id);
+    }
+
+    @Override
+    public Try<AccountDto> createAccount(final AccountDto accountDto) {
         this.logger.debug("input: {}", accountDto);
 
         //TIDI
@@ -71,17 +76,22 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    public Try<AccountDto> updateAccount(final AccountDto accountDto) {
+        return Try.success(accountDto);
+    }
+
+    @Override
     public Try<UUID> deleteAccount(final UUID accountId) {
         return Try.success(accountId);
     }
 
     @Override
-    public List<AccountTransactionDto> getAccountTransactions(UUID accountId) {
+    public List<AccountTransactionDto> getAccountTransactions(final UUID accountId) {
         return new ArrayList<>();
     }
 
     @Override
-    public Optional<AccountTransactionDto> getAccountTransaction(UUID accountTransactionId) {
+    public Optional<AccountTransactionDto> getAccountTransaction(final UUID accountTransactionId) {
         return Optional.empty();
     }
 
