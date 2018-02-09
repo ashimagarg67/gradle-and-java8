@@ -199,7 +199,7 @@ public class BankController {
     }
 
     @DeleteMapping(value = "/accounts/{accountId}")
-    public ResponseEntity<?> deleteAccount(@PathVariable final String accountId, @RequestBody final AccountDto accountDto) {
+    public ResponseEntity<?> deleteAccount(@PathVariable final String accountId) {
         this.logger.debug("input: id={}", accountId);
 
         final Try<UUID> id = this.bankService.deleteAccount(UUID.fromString(accountId));
