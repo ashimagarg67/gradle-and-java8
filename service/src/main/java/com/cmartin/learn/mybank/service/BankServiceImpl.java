@@ -70,7 +70,7 @@ public class BankServiceImpl implements BankService {
     public Try<AccountDto> createAccount(final AccountDto accountDto) {
         this.logger.debug("input: {}", accountDto);
 
-        //TIDI
+        //TODO
         AccountDto newDto = new AccountDto(newUUID(), accountDto.getAlias(), accountDto.getNumber(), accountDto.getBalance());
         return Try.success(newDto);
     }
