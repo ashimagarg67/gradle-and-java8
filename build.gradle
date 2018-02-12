@@ -45,6 +45,11 @@ subprojects {
         }
     }
 
+    ext {
+        junitVersion = '4.12'
+        springVersion = '5.0.3.RELEASE'
+    }
+
     ext.libraries = [ // Groovy map literal
                       commons_lang3   : 'org.apache.commons:commons-lang3:3.+',
                       commons_text    : 'org.apache.commons:commons-text:1.+',
@@ -70,7 +75,7 @@ subprojects {
         }
 
 //        testCompile 'org.mockito:mockito-core:2.11.0'
-        testCompile 'junit:junit:4.+',
+        testCompile "junit:junit:${junitVersion}",
                 'org.mockito:mockito-core:2.+',
                 libraries.groovy_all
     }
@@ -133,7 +138,7 @@ project(':service') {
         compile libraries.spock_core
         compile libraries.commons_lang3
         compile libraries.slf4j_api
-        compile 'org.springframework:spring-context:5.0.+'
+        compile "org.springframework:spring-context:${springVersion}"
         compile libraries.vavr
 
         testCompile project(':test-utils')
@@ -154,11 +159,11 @@ project(':webapp') {
         compile project(':shared')
         compile project(':service')
         compile 'javax.servlet:javax.servlet-api:3.1.0'
-        compile 'org.springframework:spring-webmvc:5.0.+'
+        compile "org.springframework:spring-webmvc:${springVersion}"
 //        compile project(':repository')
 
         testCompile project(':test-utils')
-        testCompile 'org.springframework:spring-test:5.0.+'
+        testCompile "org.springframework:spring-test:${springVersion}"
     }
 
     task increaseBuildVersion(type: BuildNumberGeneratorTask) {
@@ -181,8 +186,8 @@ project(':test-utils') {
     dependencies {
         compile project(':api')
         compile libraries.commons_text
-        compile 'org.springframework:spring-webmvc:5.0.+'
-        compile 'org.springframework:spring-test:5.0.+'
+        compile "org.springframework:spring-webmvc:${springVersion}"
+        compile "org.springframework:spring-test:${springVersion}"
     }
 }
 
