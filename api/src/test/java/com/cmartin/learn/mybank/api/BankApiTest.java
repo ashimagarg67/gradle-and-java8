@@ -1,13 +1,13 @@
 package com.cmartin.learn.mybank.api;
 
 import io.vavr.control.Try;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -42,8 +42,8 @@ public class BankApiTest {
 
         OperationOutputDto resultDto = operation.getOrElse(this.failureOutputDto);
 
-        Assert.assertTrue(operation.isSuccess());
-        Assert.assertEquals(resultDto.getDummyProperty(), this.successDummyProperty);
+        assertThat(operation.isSuccess());
+        assertThat(resultDto.getDummyProperty()).isEqualTo(this.successDummyProperty);
     }
 
     @Test
@@ -57,8 +57,8 @@ public class BankApiTest {
 
         OperationOutputDto resultDto = operation.getOrElse(this.failureOutputDto);
 
-        Assert.assertTrue(operation.isFailure());
-        Assert.assertEquals(resultDto.getDummyProperty(), this.failureDummyProperty);
-        Assert.assertEquals(operation.getCause().getMessage(), this.failureDummyProperty);
+        assertThat(operation.isFailure());
+        assertThat(resultDto.getDummyProperty()).isEqualTo(this.failureDummyProperty);
+        assertThat(operation.getCause().getMessage()).isEqualTo(this.failureDummyProperty);
     }
 }

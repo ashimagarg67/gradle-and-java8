@@ -5,12 +5,13 @@ import com.cmartin.learn.mybank.api.AccountDto;
 import com.cmartin.learn.mybank.test.TestUtils;
 import io.vavr.collection.Seq;
 import io.vavr.control.Validation;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit test for simple App.
@@ -35,11 +36,11 @@ public class ValidationTest {
         AccountDto accountDto = TestUtils.newAccountDto(ID, ALIAS, NUMBER, BALANCE);
         Validation<Seq<String>, AccountDto> result = accountDtoValidator.validateAccountDto(accountDto);
 
-        Assert.assertTrue(result.isValid());
-        Assert.assertTrue(result.get().getId().equals(ID));
-        Assert.assertTrue(result.get().getAlias().equals(ALIAS));
-        Assert.assertTrue(result.get().getNumber().equals(NUMBER));
-        Assert.assertTrue(result.get().getBalance().equals(BALANCE));
+        assertThat(result.isValid());
+        assertThat(result.get().getId()).isEqualByComparingTo(ID);
+        assertThat(result.get().getAlias()).isEqualTo(ALIAS);
+        assertThat(result.get().getNumber()).isEqualTo(NUMBER);
+        assertThat(result.get().getBalance()).isEqualByComparingTo(BALANCE);
     }
 
     @Test
@@ -47,7 +48,7 @@ public class ValidationTest {
         AccountDto accountDto = TestUtils.newAccountDto(null, "", "", null);
         Validation<Seq<String>, AccountDto> result = accountDtoValidator.validateAccountDto(accountDto);
 
-        Assert.assertTrue(result.isInvalid());
+        assertThat(result.isInvalid());
     }
 
 }

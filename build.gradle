@@ -51,6 +51,7 @@ subprojects {
     }
 
     ext.libraries = [ // Groovy map literal
+                      assertj         : 'org.assertj:assertj-core:3.9.0',
                       commons_lang3   : 'org.apache.commons:commons-lang3:3.+',
                       commons_text    : 'org.apache.commons:commons-text:1.+',
                       slf4j_api       : 'org.slf4j:slf4j-api:1.7.+',
@@ -77,7 +78,8 @@ subprojects {
 //        testCompile 'org.mockito:mockito-core:2.11.0'
         testCompile "junit:junit:${junitVersion}",
                 'org.mockito:mockito-core:2.+',
-                libraries.groovy_all
+                libraries.groovy_all,
+                libraries.assertj
     }
 
     jar {
