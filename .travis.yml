@@ -1,11 +1,11 @@
 language: java
+
 jdk:
   - oraclejdk8
+
 script:
-  - ./gradlew build
-  - ./gradlew jacocoTestReport
-  - cd pojo-generator
-  - ./gradlew build
+  - ./gradlew clean build jacocoTestReport
+  - pojo-generator/gradlew clean build -b pojo-generator/build.gradle
   
 after_success:
   - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py)

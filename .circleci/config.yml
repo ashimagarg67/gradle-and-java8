@@ -42,9 +42,8 @@ jobs:
       - run:
           name: build projects
           command: |
-                   ./gradlew build
-                   cd pojo-generator
-                   ./gradlew build
+                   ./gradlew clean build
+                   pojo-generator/gradlew clean build -b pojo-generator/build.gradle
 
 #  test:
 #      post:
