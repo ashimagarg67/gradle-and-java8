@@ -1,11 +1,13 @@
 package com.cmartin
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class DummyClassTest {
     val N = 1
+    val HUNDRED = 100
     val KOTLIN = "kotlin"
 
     @Test
@@ -24,35 +26,60 @@ class DummyClassTest {
 
     @Test
     fun testConsExpr() {
-        val c = Const(1.0)
-        assertEquals(1.toDouble(), N.toDouble())
+        val expr = Const(1.0)
+        assertEquals(1.toDouble(), eval(expr))
     }
 
     @Test
     fun testSimpleSumExpr() {
-        val s = Sum(Const(1.0), Const(1.0))
-        assertEquals(2.toDouble(), eval(s))
+        val expr = Sum(Const(1.0), Const(1.0))
+        assertEquals(2.toDouble(), eval(expr))
     }
 
     @Test
     fun testSumExpr() {
-        val s = Sum(Const(1.0),
+        val expr = Sum(Const(1.0),
                 Sum(Const(2.0), Const(3.0)))
-        assertEquals(6.toDouble(), eval(s))
+        assertEquals(6.toDouble(), eval(expr))
     }
 
     @Test
     fun testSimpleSubtractionExpr() {
-        val s = Sub(Const(1.0), Const(1.0))
-        assertEquals(0.toDouble(), eval(s))
+        val expr = Sub(Const(1.0), Const(1.0))
+        assertEquals(0.toDouble(), eval(expr))
     }
 
     @Test
     fun testSubtractionExpr() {
-        val s = Sub(Const(11.0),
+        val expr = Sub(Const(11.0),
                 Sum(Const(2.0), Const(1.0)))
 
-        assertEquals(8.toDouble(), eval(s))
+        assertEquals(8.toDouble(), eval(expr))
     }
+
+    @Test
+    fun `should return Some Int`() {
+        val d = createDigit(N)
+        assertThat(d).isEqualTo(optionOf(N))
+    }
+
+    @Test
+    fun `should return None`() {
+        val d = createDigit(HUNDRED)
+        assertThat(d).isEqualTo(None)
+    }
+
+    @Test
+    fun `should be digit`() {
+        val d = createDigit(N)
+        assertThat(isDigit(d)).isTrue()
+    }
+
+    @Test
+    fun `should not be digit`() {
+        val d = createDigit(HUNDRED)
+        assertThat(isDigit(d)).isFalse()
+    }
+
 
 }
