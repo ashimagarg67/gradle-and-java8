@@ -6,6 +6,7 @@ jdk:
 script:
   - ./gradlew clean build jacocoTestReport
   - pojo-generator/gradlew clean build -b pojo-generator/build.gradle
+  - kotlin/gradlew clean build -b kotlin/build.gradle
   
 after_success:
   - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py)
