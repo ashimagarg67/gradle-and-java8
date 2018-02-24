@@ -4,15 +4,10 @@
 #
 version: 2
 jobs:
-  build:
+  build_webapp:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
     working_directory: ~/repo
 
@@ -24,27 +19,43 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # build project
+      - run:
+          name: build webapp
+          command: |
+                   ./gradlew clean build jacocoTestReport
+                   pojo-generator/gradlew clean build -b pojo-generator/build.gradle
+                   kotlin/gradlew clean build -b kotlin/build.gradle
 
-      - run: ./gradlew dependencies
+  build_others:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
 
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx1024m
+      TERM: dumb
+
+    steps:
+      - checkout
 
       # build projects
       - run:
-          name: build projects
+          name: build pojo generator and basic kotlin
           command: |
-                   ./gradlew clean build
                    pojo-generator/gradlew clean build -b pojo-generator/build.gradle
                    kotlin/gradlew clean build -b kotlin/build.gradle
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build_webapp
+      - build_others
+
 #  test:
 #      post:
 #          - ./gradlew jacocoTestReport
