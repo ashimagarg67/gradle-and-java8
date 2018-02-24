@@ -24,8 +24,6 @@ jobs:
           name: build webapp
           command: |
                    ./gradlew clean build jacocoTestReport
-                   pojo-generator/gradlew clean build -b pojo-generator/build.gradle
-                   kotlin/gradlew clean build -b kotlin/build.gradle
 
   build_others:
     docker:
