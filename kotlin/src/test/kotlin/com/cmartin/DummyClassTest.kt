@@ -2,8 +2,6 @@ package com.cmartin
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class DummyClassTest {
     val N = 1
@@ -13,48 +11,57 @@ class DummyClassTest {
     @Test
     fun testConstructor() {
         val dc = DummyClass(N, KOTLIN)
-        assertEquals(N, dc.n)
-        assertEquals(KOTLIN, dc.s)
+        assertThat(dc.n).isEqualTo(N)
+        assertThat(dc.s).isEqualToIgnoringWhitespace(KOTLIN)
+        assertThat(dc.s2).isEmpty()
     }
 
     @Test
     fun testConstructorDefaultValue() {
         val dc = DummyClass(N)
-        assertEquals(N, dc.n)
-        assertTrue(dc.s.isEmpty())
+        assertThat(dc.n).isEqualTo(N)
+        assertThat(dc.s).isEmpty()
+        assertThat(dc.s2).isEmpty()
+    }
+
+    @Test
+    fun testConstructorNameArg() {
+        val dc = DummyClass(1, s2 = KOTLIN)
+        assertThat(dc.n).isEqualTo(N)
+        assertThat(dc.s).isEmpty()
+        assertThat(dc.s2).isEqualTo(KOTLIN)
     }
 
     @Test
     fun testConsExpr() {
         val expr = Const(1.0)
-        assertEquals(1.toDouble(), eval(expr))
+        assertThat(1.toDouble()).isEqualTo(eval(expr))
     }
 
     @Test
     fun testSimpleSumExpr() {
         val expr = Sum(Const(1.0), Const(1.0))
-        assertEquals(2.toDouble(), eval(expr))
+        assertThat(2.toDouble()).isEqualTo(eval(expr))
     }
 
     @Test
     fun testSumExpr() {
         val expr = Sum(Const(1.0),
                 Sum(Const(2.0), Const(3.0)))
-        assertEquals(6.toDouble(), eval(expr))
+        assertThat(6.toDouble()).isEqualTo(eval(expr))
     }
 
     @Test
     fun testSimpleSubtractionExpr() {
         val expr = Sub(Const(1.0), Const(1.0))
-        assertEquals(0.toDouble(), eval(expr))
+        assertThat(0.toDouble()).isEqualTo(eval(expr))
     }
 
     @Test
     fun testSubtractionExpr() {
         val expr = Sub(Const(11.0),
                 Sum(Const(2.0), Const(1.0)))
-
-        assertEquals(8.toDouble(), eval(expr))
+        assertThat(8.toDouble()).isEqualTo(eval(expr))
     }
 
     @Test
@@ -80,6 +87,4 @@ class DummyClassTest {
         val d = createDigit(HUNDRED)
         assertThat(isDigit(d)).isFalse()
     }
-
-
 }
