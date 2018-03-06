@@ -1,11 +1,9 @@
 package com.cmartin.learn.mybank.api;
 
 import io.vavr.control.Try;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -14,7 +12,6 @@ import static org.mockito.Mockito.when;
 /**
  * Created by cmartin on 09/07/16.
  */
-@RunWith(MockitoJUnitRunner.class)
 public class BankApiTest {
 
     protected String successDummyProperty = "OkDummyProperty";
@@ -26,7 +23,7 @@ public class BankApiTest {
     @Mock
     protected BankService api;
 
-    @Before
+    @BeforeEach
     public void setup() {
         this.operationInputDto = new OperationInputDto(successDummyProperty);
     }

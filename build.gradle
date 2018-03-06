@@ -90,7 +90,7 @@ subprojects {
     }
 
     jacoco {
-      toolVersion = "0.8.0"
+        toolVersion = "0.8.0"
     }
     jacocoTestReport {
         reports {
@@ -111,6 +111,12 @@ project(':api') {
         compile libraries.vavr
 
         testCompile libraries.openpojo
+        testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+    }
+
+    configurations {
+        testCompile.exclude group: 'junit', module: 'junit'
     }
 
     test {

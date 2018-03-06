@@ -8,8 +8,8 @@ import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
 import com.openpojo.validation.rule.impl.GetterMustExistRule;
 import com.openpojo.validation.test.impl.GetterTester;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class DTOTest {
     private List<PojoClass> pojoClasses;
     private final ClassNameFilter classNameFilter = new ClassNameFilter();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.validator = ValidatorBuilder.create()
                 //.with(new SetterMustExistRule())
