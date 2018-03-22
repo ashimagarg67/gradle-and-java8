@@ -27,7 +27,6 @@ class DtoFactory {
     }
 
 
-
     public static BigDecimal newBigDecimal(final Double balance) {
         BigDecimal number = BigDecimal.valueOf(balance);
         return number;

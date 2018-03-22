@@ -23,20 +23,24 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 
 class ControllerTest extends Specification {
 
+    // HTTP codes
     def statusOk = status().isOk()
     def statusCreated = status().isCreated()
     def statusNoContent = status().isNoContent()
     def statusNotFound = status().isNotFound()
     def statusConflict = status().isConflict()
 
+    // encoding
     def contentTypeJson = content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-    def MockMvc mockMvc
-    def converter = new MappingJackson2HttpMessageConverter()
 
+    // business data
     def accountId = UUID.randomUUID()
 
     @Subject
-    BankController bankController
+    private BankController bankController
+
+    def converter = new MappingJackson2HttpMessageConverter()
+    private MockMvc mockMvc
 
     def bankService = Stub(BankService)
     def filterManager = Mock(FilterManager)
@@ -49,7 +53,6 @@ class ControllerTest extends Specification {
                 .setMessageConverters(converter)
                 .build()
     }
-
 
     def "get account"() {
         given: "an account identifier"
