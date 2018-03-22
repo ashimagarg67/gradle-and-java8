@@ -47,7 +47,7 @@ subprojects {
 
     ext {
         junitVersion = '4.12'
-        springVersion = '5.0.3.RELEASE'
+        springVersion = '5.0.4.RELEASE'
     }
 
     ext.libraries = [ // Groovy map literal
