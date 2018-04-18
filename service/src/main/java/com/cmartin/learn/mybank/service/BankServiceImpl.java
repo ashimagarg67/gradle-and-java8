@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.cmartin.learn.mybank.service.DtoFactory.newAccountList;
+import static com.cmartin.learn.mybank.service.DtoFactory.*;
 import static com.cmartin.learn.mybank.service.DtoFactory.newUUID;
 
 /**
@@ -58,7 +58,9 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Optional<AccountDto> getAccount(final UUID accountId) {
-        return Optional.empty();
+        
+        return Optional.of(newAccount("33334444556666666666", 1.0));
+        //return Optional.empty();
     }
 
     @Override
