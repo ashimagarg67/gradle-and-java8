@@ -23,7 +23,7 @@ jobs:
       - run:
           name: build webapp
           command: |
-                   ./gradlew clean build jacocoTestReport
+                   ./gradlew clean build
 
   build_others:
     docker:

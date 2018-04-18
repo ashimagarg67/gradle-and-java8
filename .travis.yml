@@ -4,7 +4,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - ./gradlew clean build jacocoTestReport
+  - ./gradlew clean build
   - pojo-generator/gradlew clean build -b pojo-generator/build.gradle
   - kotlin/gradlew clean build -b kotlin/build.gradle
   
