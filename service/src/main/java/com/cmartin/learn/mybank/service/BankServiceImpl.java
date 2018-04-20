@@ -1,6 +1,6 @@
 package com.cmartin.learn.mybank.service;
 
-import com.cmartin.learn.mybank.BankRepository;
+import com.cmartin.learn.mybank.AccountRepository;
 import com.cmartin.learn.mybank.api.*;
 import io.vavr.control.Try;
 import org.slf4j.Logger;
@@ -24,9 +24,9 @@ public class BankServiceImpl implements BankService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     // TODO @Autowired
-    private BankRepository bankRepository;
+    private AccountRepository bankRepository;
 
-    public BankServiceImpl(final BankRepository bankRepository) {
+    public BankServiceImpl(final AccountRepository bankRepository) {
         this.bankRepository = bankRepository;
     }
 

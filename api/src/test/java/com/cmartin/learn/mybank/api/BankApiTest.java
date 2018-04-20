@@ -54,7 +54,7 @@ public class BankApiTest {
 
         OperationOutputDto resultDto = operation.getOrElse(this.failureOutputDto);
 
-        assertThat(operation.isFailure());
+        assertThat(operation.isSuccess());
         assertThat(resultDto.getDummyProperty()).isEqualTo(this.failureDummyProperty);
         assertThat(operation.getCause().getMessage()).isEqualTo(this.failureDummyProperty);
     }
