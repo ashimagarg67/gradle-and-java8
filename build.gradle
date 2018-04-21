@@ -127,6 +127,8 @@ project(':repository') {
         compile libraries.groovy_all
         compile libraries.spock_core
 
+        testCompile project(':test-utils')
+
 //        compile(group: 'org.springframework.data', name: 'spring-data-neo4j', version: '4.1.2.RELEASE') {
 //            exclude module: 'commons-codec'
 //            exclude module: 'jackson-databind'
@@ -194,6 +196,7 @@ project(':webapp') {
 project(':test-utils') {
     dependencies {
         compile project(':api')
+        compile project(':domain')
         compile libraries.commons_text
         compile "org.springframework:spring-webmvc:${springVersion}"
         compile "org.springframework:spring-test:${springVersion}"
