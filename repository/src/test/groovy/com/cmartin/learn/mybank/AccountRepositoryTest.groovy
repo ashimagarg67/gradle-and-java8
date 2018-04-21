@@ -26,11 +26,10 @@ class AccountRepositoryTest extends Specification {
 
     def "save an account"() {
         given: "an account"
-        def account = ACCOUNT_ONE
         def previousCount = repository.count()
 
         when: "save the account"
-        Optional<Account> some = repository.save(account)
+        Optional<Account> some = repository.save(ACCOUNT_ONE)
 
         then: "repository sets an identifier to the account"
         some.isPresent() == true
@@ -41,11 +40,10 @@ class AccountRepositoryTest extends Specification {
 
     def "get an account by id"() {
         given: "an stored account id"
-        def account = ACCOUNT_ONE
-        repository.save(account)
+        repository.save(ACCOUNT_ONE)
 
         when: "retrieve the account by id"
-        def result = repository.findOne(account.id)
+        def result = repository.findOne(ACCOUNT_ONE.id)
 
         then: "the account retrieved has the id supplied"
         result.isPresent() == true
@@ -76,12 +74,11 @@ class AccountRepositoryTest extends Specification {
 
     def "delete an account"() {
         given: "an stored account"
-        def account = ACCOUNT_ONE
-        repository.save(account)
+        repository.save(ACCOUNT_ONE)
         def previousCount = repository.count()
 
         when: "delete the account by id"
-        repository.delete(account)
+        repository.delete(ACCOUNT_ONE)
 
         then: "the account retrieved has the id supplied"
         repository.count() == previousCount - 1

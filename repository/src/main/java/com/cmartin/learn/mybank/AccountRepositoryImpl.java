@@ -22,9 +22,7 @@ public class AccountRepositoryImpl implements AccountRepository<Account, UUID> {
 
     @Override
     public Optional<Account> findOne(final UUID primaryKey) {
-        final Account account = this.repository.get(primaryKey);
-
-        return (account == null) ? Optional.empty() : Optional.of(account);
+        return Optional.ofNullable(this.repository.get(primaryKey));
     }
 
     @Override

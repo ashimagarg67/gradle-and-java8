@@ -1,0 +1,12 @@
+dependencies {
+    compile project(':api'),
+            project(':domain'),
+            "org.apache.commons:commons-lang3:${commonsLang3Version}",
+            "org.apache.commons:commons-text:${commonsTextVersion}",
+            "org.springframework:spring-webmvc:${springVersion}",
+            "org.springframework:spring-test:${springVersion}"
+
+    testCompile "junit:junit:${junitVersion}",
+             "org.assertj:assertj-core:${assertjVersion}"
+
+}

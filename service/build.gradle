@@ -1,0 +1,12 @@
+dependencies {
+    compile project(':api'),
+            project(':repository'),
+            project(':shared'),
+            "io.vavr:vavr:${vavrVersion}",
+            "org.slf4j:slf4j-api:${slf4jVersion}",
+            "org.springframework:spring-context:${springVersion}"
+
+    testCompile project(':test-utils'),
+            "org.assertj:assertj-core:${assertjVersion}"
+
+}

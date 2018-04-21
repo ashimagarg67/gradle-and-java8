@@ -1,0 +1,13 @@
+dependencies {
+    compile project(':shared'),
+            "org.apache.commons:commons-lang3:${commonsLang3Version}",
+            "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            "io.vavr:vavr:${vavrVersion}"
+
+    testCompile "org.mockito:mockito-core:${mockitoVersion}",
+            "org.assertj:assertj-core:${assertjVersion}",
+            "com.openpojo:openpojo:${openpojoVersion}",
+            "org.junit.jupiter:junit-jupiter-api:${junit5Version}"
+
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:${junit5Version}"
+}

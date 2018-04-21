@@ -1,0 +1,17 @@
+apply plugin: 'war'
+//apply plugin: 'org.akhikhl.gretty'
+
+dependencies {
+    compile project(':service'),
+            "io.vavr:vavr:${vavrVersion}",
+            "org.springframework:spring-webmvc:${springVersion}",
+            "javax.servlet:javax.servlet-api:${servletVersion}",
+            "org.codehaus.groovy:groovy-all:${groovyVersion}",
+            "org.spockframework:spock-core:${spockVersion}"
+
+    testCompile project(':test-utils'),
+            "org.springframework:spring-test:${springVersion}",
+            "org.mockito:mockito-core:${mockitoVersion}",
+            "org.hamcrest:java-hamcrest:2.0.0.0",
+            "com.jayway.jsonpath:json-path:2.4.0"
+}
