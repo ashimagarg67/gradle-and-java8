@@ -2,5 +2,5 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
     compile project(':webapp'),
-            "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+            "org.springframework.boot:spring-boot-starter-web"
 }

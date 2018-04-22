@@ -34,6 +34,9 @@ class AccountRepositoryTest extends Specification {
         then: "repository sets an identifier to the account"
         some.isPresent() == true
         some.get().id != null
+        some.get().alias == ACCOUNT_ALIAS
+        some.get().balance == ACCOUNT_BALANCE
+        some.get().number == ACCOUNT_NUMBER
         some.get().id.toString().isEmpty() == false
         repository.count() == previousCount + 1
     }

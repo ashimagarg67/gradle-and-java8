@@ -1,5 +1,8 @@
 package com.cmartin.learn.mybank.service;
 
+import com.cmartin.learn.mybank.api.AccountDto;
+import com.cmartin.learn.mybank.api.ServiceException;
+import io.vavr.control.Try;
 import org.apache.commons.text.RandomStringGenerator;
 
 public class ServiceHelper {
@@ -14,4 +17,7 @@ public class ServiceHelper {
         return String.format("%s%s", letters, numbers);
     }
 
+    static Try<AccountDto> buildError(final String message) {
+        return Try.failure(new ServiceException(message));
+    }
 }

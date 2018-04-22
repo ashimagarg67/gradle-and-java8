@@ -13,11 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static com.cmartin.learn.mybank.service.DtoFactory.newAccount;
-import static com.cmartin.learn.mybank.service.DtoFactory.newAccountList;
 import static com.cmartin.learn.mybank.service.SimpleMapper.mapRepositoryToService;
 import static com.cmartin.learn.mybank.service.SimpleMapper.mapServiceToRepository;
 
@@ -92,7 +89,7 @@ public class BankServiceImpl implements BankService {
 
         //TODO pattern matching with vavr
         return accountOption.isPresent() ? Try.success(mapRepositoryToService(accountOption.get())) :
-                this.buildError("Error while storing the entity");
+                ServiceHelper.buildError("Error while storing the entity");
     }
 
     @Override
@@ -130,8 +127,4 @@ public class BankServiceImpl implements BankService {
         return new ArrayList<>();
     }
 
-    // H E L P E R
-    private Try<AccountDto> buildError(final String message) {
-        return Try.failure(new ServiceException(message));
-    }
 }

@@ -4,8 +4,7 @@ dependencies {
             project(':shared'),
             "io.vavr:vavr:${vavrVersion}",
             "org.apache.commons:commons-text:${commonsTextVersion}",
-            "org.slf4j:slf4j-api:${slf4jVersion}",
-            "org.springframework:spring-context:${springVersion}"
+            "org.slf4j:slf4j-api:${slf4jVersion}"
 
     testCompile project(':test-utils'),
             "org.assertj:assertj-core:${assertjVersion}"

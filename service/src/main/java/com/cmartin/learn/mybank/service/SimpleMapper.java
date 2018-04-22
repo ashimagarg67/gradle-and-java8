@@ -23,8 +23,8 @@ public class SimpleMapper {
         return new AccountDto(entity.getId(), entity.getAlias(), entity.getNumber(), entity.getBalance());
     }
 
-     static List<AccountDto> mapRepositoryToService(Iterable<Account> accounts) {
-        return StreamSupport.stream(accounts.spliterator(),false)
+    static List<AccountDto> mapRepositoryToService(Iterable<Account> accounts) {
+        return StreamSupport.stream(accounts.spliterator(), false)
                 .map(a -> mapRepositoryToService(a)).collect(Collectors.toList());
     }
 }
