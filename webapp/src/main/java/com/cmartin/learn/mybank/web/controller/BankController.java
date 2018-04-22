@@ -43,11 +43,14 @@ public class BankController {
 
         this.logger.debug("input: accountId={}", accountId);
 
+        //TODO validate id => UUID
+
         final Optional<AccountDto> account = this.bankService.getAccount(UUID.fromString(accountId));
 
-        this.logger.debug("output: {}", account.get().toString());
+        this.logger.debug("output: {}", account.toString());
 
-        return new ResponseEntity<>(account.get(), HttpStatus.OK);
+        return account.isPresent() ? new ResponseEntity<>(account.get(), HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/accounts/{accountId}/transactions",
@@ -79,7 +82,7 @@ public class BankController {
         return new ResponseEntity<>(accountTransaction.get(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/accounts",
+    @GetMapping(value = "/accounts/",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AccountListDto> getAccounts(
             @RequestParam(required = false, defaultValue = "10") final Integer pageSize) {

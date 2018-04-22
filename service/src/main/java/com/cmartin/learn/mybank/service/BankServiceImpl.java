@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.cmartin.learn.mybank.service.DtoFactory.newAccount;
 import static com.cmartin.learn.mybank.service.SimpleMapper.mapRepositoryToService;
 import static com.cmartin.learn.mybank.service.SimpleMapper.mapServiceToRepository;
 
@@ -69,8 +68,12 @@ public class BankServiceImpl implements BankService {
     @Override
     public Optional<AccountDto> getAccount(final UUID accountId) {
 
-        return Optional.of(newAccount("33334444556666666666", 1.0));
-        //return Optional.empty();
+        final Optional<Account> accountOption = this.bankRepository.findOne(accountId);
+
+        //TODO pattern matching with vavr
+
+        return accountOption.isPresent() ? Optional.of(mapRepositoryToService(accountOption.get())) :
+                Optional.empty();
     }
 
     @Override
