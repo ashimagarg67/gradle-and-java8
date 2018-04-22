@@ -11,3 +11,4 @@ dependencies {
 
     testRuntime "org.junit.jupiter:junit-jupiter-engine:${junit5Version}"
 }
+

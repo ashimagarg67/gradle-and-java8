@@ -8,5 +8,4 @@ dependencies {
 
     testCompile project(':test-utils'),
             "org.assertj:assertj-core:${assertjVersion}"
-
 }

@@ -1,5 +1,4 @@
 dependencies {
-    //compile project(':api'),
     compile project(':domain'),
             "org.codehaus.groovy:groovy-all:${groovyVersion}",
             "org.spockframework:spock-core:${spockVersion}"

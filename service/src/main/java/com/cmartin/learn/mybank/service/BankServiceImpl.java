@@ -13,7 +13,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.cmartin.learn.mybank.service.DtoFactory.*;
-import static com.cmartin.learn.mybank.service.DtoFactory.newUUID;
 
 /**
  * Created by cmartin on 10/07/16.
@@ -58,7 +57,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Optional<AccountDto> getAccount(final UUID accountId) {
-        
+
         return Optional.of(newAccount("33334444556666666666", 1.0));
         //return Optional.empty();
     }

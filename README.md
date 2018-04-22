@@ -9,16 +9,22 @@
 ## Research and POCs with:
 
 - Gradle 4.x
+- Multimodule application
 - Java 8
-- Springframework 4.3.x, 5.0.x
 - Spring Boot 2.0.x
+- Springframework 5.0.x
 - REST API
 - Continuous Integration
 - Software testing
-- Multimodule application
+- Spock
+- Jacoco
 
 ## Gradle:
 
-- gradle wrapper --gradle-version 4.6
-- ./gradlew jettyRun
+- gradle wrapper --gradle-version 4.7
+- ./gradlew bootRun
+- ./gradlew bootJar
+- java -jar application/build/libs/application-1.0.0-SNAPSHOT.jar
 - curl http://localhost:8081/mybank/accounts
+- http http://localhost:8081/mybank/accounts
+- ./gradlew repository:jacocoTestReport
