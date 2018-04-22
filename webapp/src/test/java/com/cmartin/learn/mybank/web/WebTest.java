@@ -87,7 +87,7 @@ public class WebTest {
         when(this.bankApi.getAccounts(any(AccountFilter.class)))
                 .thenReturn(TestUtils.createAccounts(COLLECTION_SIZE_5));
 
-        this.mockMvc.perform(get("/accounts"))
+        this.mockMvc.perform(get("/accounts/"))
                 .andDo(print())
                 .andExpect(statusOk)
                 .andExpect(contentTypeJson)

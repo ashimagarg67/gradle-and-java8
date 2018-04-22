@@ -75,7 +75,7 @@ class ControllerTest extends Specification {
         bankService.getAccounts(_) >> TestUtils.createAccounts(COLLECTION_SIZE_5)
 
         when:
-        ResultActions result = mockMvc.perform(get("/accounts"))
+        ResultActions result = mockMvc.perform(get("/accounts/"))
                 .andDo(print())
 
         then:
