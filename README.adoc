@@ -8,14 +8,11 @@ v0.1, Abril, 2018, Madrid
 :experimental:
 
 == Continuous Integration
-[cols="1",options="header"]
-|===
-| Service Status
-| [![Build Status](https://travis-ci.org/butcherless/gradle-and-java8.svg?branch=master)](https://travis-ci.org/butcherless/gradle-and-java8)
-| [![Build Status](https://semaphoreci.com/api/v1/butcherless/scala/branches/master/badge.svg)](https://semaphoreci.com/butcherless/scala)
-| [![Coverage Status](https://coveralls.io/repos/github/butcherless/gradle-and-java8/badge.svg?branch=master)](https://coveralls.io/github/butcherless/gradle-and-java8?branch=master)
-| [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/butcherless/gradle-and-java8)
-|===
+
+* image:https://travis-ci.org/butcherless/gradle-and-java8.svg?branch=master[] -> link:https://travis-ci.org/butcherless/gradle-and-java8[Travis CI]
+* image:https://semaphoreci.com/api/v1/butcherless/scala/branches/master/badge.svg[] -> link:https://semaphoreci.com/butcherless/scala)[Semaphore CI]
+* image:https://coveralls.io/repos/github/butcherless/gradle-and-java8/badge.svg?branch=master[] -> link:https://coveralls.io/github/butcherless/gradle-and-java8?branch=master[Coveralls]
+* image:https://sputnik.ci/conf/badge[] => link:https://sputnik.ci/app#/builds/butcherless/gradle-and-java8[Sputnik]
 
 
 == Research and POCs with:
