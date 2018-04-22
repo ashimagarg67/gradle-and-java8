@@ -1,18 +1,25 @@
 package com.cmartin.learn.mybank.service;
 
+import com.cmartin.learn.domain.Account;
 import com.cmartin.learn.mybank.AccountRepository;
 import com.cmartin.learn.mybank.api.*;
 import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-import static com.cmartin.learn.mybank.service.DtoFactory.*;
+import static com.cmartin.learn.mybank.service.DtoFactory.newAccount;
+import static com.cmartin.learn.mybank.service.DtoFactory.newAccountList;
+import static com.cmartin.learn.mybank.service.SimpleMapper.mapRepositoryToService;
+import static com.cmartin.learn.mybank.service.SimpleMapper.mapServiceToRepository;
 
 /**
  * Created by cmartin on 10/07/16.
@@ -22,7 +29,7 @@ public class BankServiceImpl implements BankService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // TODO @Autowired
+    @Autowired
     private AccountRepository bankRepository;
 
     public BankServiceImpl(final AccountRepository bankRepository) {
@@ -46,8 +53,15 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public List<AccountDto> getAccounts(final AccountFilter filter) {
-        // new ArrayList<>();
-        return newAccountList();
+        // dummy impl
+        //return newAccountList();
+
+        //TODO validate filter and build criteria
+
+        final Iterable<Account> accounts = this.bankRepository.findAll();
+
+        List<AccountDto> dtos = SimpleMapper.mapRepositoryToService(accounts);
+        return dtos;
     }
 
     @Override
@@ -68,12 +82,17 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Try<AccountDto> createAccount(final AccountDto accountDto) {
-        this.logger.debug("input: {}", accountDto);
+    public Try<AccountDto> createAccount(final AccountDto request) {
+        this.logger.debug("input: {}", request);
 
-        //TODO
-        AccountDto newDto = new AccountDto(newUUID(), accountDto.getAlias(), accountDto.getNumber(), accountDto.getBalance());
-        return Try.success(newDto);
+        //TODO validate dto
+
+        //TODO mapstruct mapper service => repository
+        final Optional<Account> accountOption = this.bankRepository.save(mapServiceToRepository(request));
+
+        //TODO pattern matching with vavr
+        return accountOption.isPresent() ? Try.success(mapRepositoryToService(accountOption.get())) :
+                this.buildError("Error while storing the entity");
     }
 
     @Override
@@ -109,5 +128,10 @@ public class BankServiceImpl implements BankService {
     @Override
     public List<UserDto> getAccountUsers(final UUID accountId) {
         return new ArrayList<>();
+    }
+
+    // H E L P E R
+    private Try<AccountDto> buildError(final String message) {
+        return Try.failure(new ServiceException(message));
     }
 }

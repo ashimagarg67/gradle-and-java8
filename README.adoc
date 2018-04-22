@@ -1,0 +1,61 @@
+= Gradle & Java 8 Project
+Carlos Martín
+v0.1, Abril, 2018, Madrid
+:icons: font
+:toc: left
+:sectnums:
+:source-highlighter: coderay
+:experimental:
+
+== Continuous Integration
+[cols="1",options="header"]
+|===
+| Service Status
+| [![Build Status](https://travis-ci.org/butcherless/gradle-and-java8.svg?branch=master)](https://travis-ci.org/butcherless/gradle-and-java8)
+| [![Build Status](https://semaphoreci.com/api/v1/butcherless/scala/branches/master/badge.svg)](https://semaphoreci.com/butcherless/scala)
+| [![Coverage Status](https://coveralls.io/repos/github/butcherless/gradle-and-java8/badge.svg?branch=master)](https://coveralls.io/github/butcherless/gradle-and-java8?branch=master)
+| [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/butcherless/gradle-and-java8)
+|===
+
+
+== Research and POCs with:
+
+* Gradle 4.x
+** Multimodule application
+** Quick build lifecycle
+* Java 8
+* Spring Software
+** Boot 2.0.x
+** Springframework 5.0.x
+* REST API
+* Continuous Integration
+* Software testing
+** Spock
+** JUnit5
+** Jacoco
+
+== Gradle:
+
+* `gradle wrapper` --gradle-version 4.7
+* `./gradlew bootRun` -> run webapplication
+* ``./gradlew bootJar` -> package webapplication
+* `java -jar application/build/libs/application-1.0.0-SNAPSHOT.jar` -> run packaged webapplication
+* `./gradlew repository:jacocoTestReport`-> jacoco test report
+* `./gradlew test --fail-fast -t` -> rapid test development
+
+
+== Check server running
+ curl http://localhost:8081/mybank/
+ http http://localhost:8081/mybank/
+
+
+== Resource Operations
+
+.list accounts
+ curl http://localhost:8081/mybank/accounts
+ http http://localhost:8081/mybank/accounts
+
+
+.create account
+ echo '{"alias":"account-alias-1","balance":"150.00"}' | http http://localhost:8081/mybank/accounts
+ curl -d '{"alias":"account-alias-2","balance":"10.00"}' -H "Content-Type: application/json" -X POST http://localhost:8081/mybank/accounts

@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Created by cmartin on 16/07/16.
  */
-public interface AccountRepository<T extends Contract, ID extends Serializable> {
+public interface BaseRepository<T extends Contract, ID extends Serializable> {
     /**
      * @param entity
      * @return

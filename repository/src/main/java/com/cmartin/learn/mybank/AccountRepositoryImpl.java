@@ -1,12 +1,14 @@
 package com.cmartin.learn.mybank;
 
 import com.cmartin.learn.domain.Account;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+@Repository
 public class AccountRepositoryImpl implements AccountRepository<Account, UUID> {
 
     private final ConcurrentMap<UUID, Account> repository = new ConcurrentHashMap<>();

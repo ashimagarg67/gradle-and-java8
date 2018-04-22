@@ -1,7 +1,8 @@
 dependencies {
     compile project(':domain'),
             "org.codehaus.groovy:groovy-all:${groovyVersion}",
-            "org.spockframework:spock-core:${spockVersion}"
+            "org.spockframework:spock-core:${spockVersion}",
+            "org.springframework:spring-context:${springVersion}"
 
     testCompile project(':test-utils')
 }

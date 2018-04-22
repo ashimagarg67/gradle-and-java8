@@ -50,7 +50,7 @@ class AccountRepositoryTest extends Specification {
     }
 
     def "get a missing account by id"() {
-        given: "an stored account id"
+        given: "a missing account id"
         def id = DomainUtils.getAccountId()
 
         when: "retrieve the account by id"
@@ -84,6 +84,28 @@ class AccountRepositoryTest extends Specification {
         repository.count() == previousCount - 1
     }
 
+    def "account does not exists"() {
+        given: "an empty repository"
+        def id = DomainUtils.getAccountId()
+
+        when: "get a missing account by id"
+        def result = repository.exists(id)
+
+        then: "the account retrieved has the id supplied"
+        result == false
+    }
+
+    def "account exists"() {
+        given: "an stored account id"
+        repository.save(ACCOUNT_ONE)
+
+        when: "retrieve the account by id"
+        def result = repository.exists(ACCOUNT_ONE.id)
+
+        then: "the account retrieved has the id supplied"
+        result == true
+
+    }
     // TODO update test
 
 }
