@@ -1,6 +1,13 @@
 apply plugin: 'org.springframework.boot'
 
+configurations {
+    // exclude Tomcat Server
+    compile.exclude module: 'spring-boot-starter-tomcat'
+}
+
 dependencies {
     compile project(':webapp'),
-            "org.springframework.boot:spring-boot-starter-web"
+            "org.springframework.boot:spring-boot-starter-web",
+            // add Jetty Server
+            "org.springframework.boot:spring-boot-starter-jetty"
 }
