@@ -1,7 +1,7 @@
 buildscript {
-    ext.kotlin_version = '1.2.40'
+    ext.kotlin_version = '1.2.41'
     ext.assertj_version = '3.9.1'
-    ext.junit_version = '5.1.1'
+    ext.junit_version = '5.2.0'
 
     repositories {
         mavenCentral()
@@ -9,7 +9,7 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.1'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.2.0'
     }
 }
 
