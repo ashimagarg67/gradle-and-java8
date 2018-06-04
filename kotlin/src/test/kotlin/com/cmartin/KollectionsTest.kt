@@ -1,7 +1,10 @@
 package com.cmartin
 
+import arrow.core.ForTry
+import arrow.core.Try
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+
 
 class KollectionsTest {
 
@@ -13,5 +16,10 @@ class KollectionsTest {
         assertThat(alphabetMap).isNotEmpty
         assertThat(alphabetMap.size).isEqualTo(alphabetList.size)
         assertThat(alphabetMap.keys.minus(alphabetList)).isEmpty()
+    }
+
+    @Test
+    fun `should return success`() {
+
     }
 }
