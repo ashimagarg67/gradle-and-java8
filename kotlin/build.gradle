@@ -29,18 +29,20 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+mainClassName = 'com.cmartin.ApplicationKt'
+
 dependencies {
     compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
             "org.jetbrains.kotlin:kotlin-reflect"
 
-    compile 'io.arrow-kt:arrow-core:${arrowVersion}'
-    compile 'io.arrow-kt:arrow-syntax:${arrowVersion}'
-    compile 'io.arrow-kt:arrow-typeclasses:${arrowVersion}'
-    compile 'io.arrow-kt:arrow-data:${arrowVersion}'
-    compile 'io.arrow-kt:arrow-instances-core:${arrowVersion}'
-    compile 'io.arrow-kt:arrow-instances-data:${arrowVersion}'
+    compile "io.arrow-kt:arrow-core:${arrowVersion}"
+    compile "io.arrow-kt:arrow-syntax:${arrowVersion}"
+    compile "io.arrow-kt:arrow-typeclasses:${arrowVersion}"
+    compile "io.arrow-kt:arrow-data:${arrowVersion}"
+    compile "io.arrow-kt:arrow-instances-core:${arrowVersion}"
+    compile "io.arrow-kt:arrow-instances-data:${arrowVersion}"
 
     testCompile "org.junit.jupiter:junit-jupiter-api:${junit_version}",
             "org.assertj:assertj-core:$assertj_version"

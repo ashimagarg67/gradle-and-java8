@@ -7,8 +7,8 @@ import java.util.stream.Collectors
 
 
 fun main(args: Array<String>) {
-    val command = "nmap localhost"
-    val arguments = arrayOf("")
+    val command = "ls"
+    val arguments = arrayOf("-l")
     println("Bash invoker!")
     val process = Runtime.getRuntime().exec(command, arguments)
     process.waitFor(5000, TimeUnit.MILLISECONDS)
