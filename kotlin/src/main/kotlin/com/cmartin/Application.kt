@@ -7,8 +7,8 @@ import java.util.stream.Collectors
 
 
 fun main(args: Array<String>) {
-    val command = "ls"
-    val arguments = arrayOf("-l")
+    val command = "yo --version"
+    val arguments = arrayOf("")
     println("Bash invoker!")
     val process = Runtime.getRuntime().exec(command, arguments)
     process.waitFor(5000, TimeUnit.MILLISECONDS)
