@@ -29,8 +29,8 @@ subprojects {
     repositories.mavenCentral()
 
     ext {
-        assertjVersion = '3.10.0'
-        commonsLang3Version = '3.7'
+        assertjVersion = '3.11.0'
+        commonsLang3Version = '3.8'
         commonsTextVersion = '1.3'
         groovyVersion = '2.5.0'
         jacksonVersion = '2.9.6'
