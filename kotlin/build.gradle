@@ -1,6 +1,6 @@
 buildscript {
     ext.arrowVersion = '0.7.3'
-    ext.springBootVersion = '2.0.6.RELEASE'
+    ext.springBootVersion = '2.1.0.RELEASE'
     ext.kotlin_version = '1.2.71'
     ext.assertj_version = '3.11.1'
     ext.junit_version = '5.3.1'

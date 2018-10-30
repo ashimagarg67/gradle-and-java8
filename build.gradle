@@ -1,5 +1,5 @@
 buildscript {
-    ext.springBootVersion = '2.0.6.RELEASE'
+    ext.springBootVersion = '2.1.0.RELEASE'
 
     repositories {
         mavenCentral()
@@ -42,7 +42,7 @@ subprojects {
         servletVersion = '4.0.1'
         slf4jVersion = '1.7.25'
         spockVersion = '1.2-groovy-2.5'
-        springVersion = '5.1.1.RELEASE'
+        springVersion = '5.1.2.RELEASE'
         vavrVersion = '0.9.2'
     }
 
