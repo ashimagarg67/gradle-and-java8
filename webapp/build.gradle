@@ -9,7 +9,7 @@ dependencies {
     testCompile project(':test-utils'),
             "org.springframework:spring-test:${springVersion}",
             "org.mockito:mockito-core:${mockitoVersion}",
-            "org.hamcrest:java-hamcrest:2.0.0.0",
+            "org.hamcrest:java-hamcrest:${javaHamcrestVersion}",
             "com.jayway.jsonpath:json-path:${jsonPathVersion}",
             "ch.qos.logback:logback-classic:${logbackVersion}"
 }
