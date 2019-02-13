@@ -43,7 +43,7 @@ subprojects {
         servletVersion = '4.0.1'
         slf4jVersion = '1.7.25'
         spockVersion = '1.2-groovy-2.5'
-        springVersion = '5.1.4.RELEASE'
+        springVersion = '5.1.5.RELEASE'
         vavrVersion = '0.10.0'
     }
 
