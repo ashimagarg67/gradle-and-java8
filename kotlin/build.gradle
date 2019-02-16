@@ -1,8 +1,8 @@
 buildscript {
     ext.arrowVersion = '0.7.3'
-    ext.springBootVersion = '2.1.1.RELEASE'
+    ext.springBootVersion = '2.1.3.RELEASE'
     ext.kotlin_version = '1.3.21'
-    ext.assertj_version = '3.11.1'
+    ext.assertj_version = '3.12.0'
     ext.junit_version = '5.4.0'
 
     repositories {
