@@ -35,7 +35,7 @@ subprojects {
         jacksonVersion = '2.9.8'
         javaHamcrestVersion = '2.0.0.0'
         junitVersion = '4.12'
-        junit5Version = '5.4.1'
+        junit5Version = '5.4.2'
         jsonPathVersion = '2.4.0'
         logbackVersion = '1.2.3'
         mockitoVersion = '2.23.0'
