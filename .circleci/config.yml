@@ -45,7 +45,6 @@ jobs:
           name: build pojo generator and basic kotlin
           command: |
                    pojo-generator/gradlew clean build -b pojo-generator/build.gradle
-                   kotlin/gradlew clean build -b kotlin/build.gradle
 
 workflows:
   version: 2

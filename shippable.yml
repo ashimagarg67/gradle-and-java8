@@ -6,4 +6,3 @@ jdk:
 build:
   ci:
     - ./gradlew clean build
-    - kotlin/gradlew clean build -b kotlin/build.gradle
